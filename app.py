@@ -14,7 +14,7 @@ users = {
 @auth.login_required
 def app_route_index():
 	try:
-		return "Hello, World!"
+		return "Hello, " + auth.username()
 	except Exception as e:
 		return "Exception:" + str(traceback.format_exc()), 500
 		
