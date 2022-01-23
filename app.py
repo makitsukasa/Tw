@@ -3,12 +3,9 @@ from flask import Flask, request
 from flask_httpauth import HTTPDigestAuth
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'acchikocchifukin'
+app.config['SECRET_KEY'] = os.getenv('CUSTOMCONNSTR_SECRET_KEY')
+users = json.loads(os.getenv('CUSTOMCONNSTR_USERS'))
 auth = HTTPDigestAuth()
-
-users = {
-	"user01" : "pass01"
-}
 
 # https://www.mathpython.com/ja/flask-https-redirect
 @app.before_request:
