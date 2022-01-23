@@ -3,6 +3,7 @@ from flask import Flask, request
 from flask_httpauth import HTTPDigestAuth
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'acchikocchifukin'
 auth = HTTPDigestAuth()
 
 users = {
@@ -11,10 +12,10 @@ users = {
 
 @app.before_request
 def before_request():
-    if not request.is_secure:
-        url = request.url.replace('http://', 'https://', 1)
-        code = 301
-        return redirect(url, code=code)
+	if not request.is_secure:
+		url = request.url.replace('http://', 'https://', 1)
+		code = 301
+		return redirect(url, code=code)
 
 @app.route("/")
 @auth.login_required
