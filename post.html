@@ -1,0 +1,25 @@
+<!doctype html>
+<head>
+	<title>post</title>
+	<script>
+		window.onload = function(){
+			inputElem = document.getElementById("body1");
+
+			inputElem.onkeydown = function(e){
+				if (this.value && event.ctrlKey && e.keyCode === 13) {
+					// フォームを送信
+					document.getElementById("form1").submit();
+				}
+			};
+
+			inputElem.value = "";
+			inputElem.focus();
+		}
+	</script>
+</head>
+<body>
+	<form method="post" action="/update_status" id="form1">
+		<input name="body" id="body1" value="" />
+		<input type="submit" />
+	</form>
+</body>
