@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+from tweet import update_status
 from flask import Flask, request
 from flask_httpauth import HTTPDigestAuth
 
@@ -24,6 +25,13 @@ def app_route_index():
 		return "Hello, " + auth.username()
 	except Exception as e:
 		return "Exception:" + str(traceback.format_exc()), 500
+
+@app.route("/update_status", methods=["POST"])
+@auth.login_required
+def app_route_update_status():
+	if not update_status():
+		return "/update_status server error", 500
+	return "/update_status post succeeded"
 		
 @auth.get_password
 def get_password(username):
