@@ -4,9 +4,11 @@ import datetime
 from tweet import update_status, home_timeline
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
+from flask_talisman import Talisman
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('CUSTOMCONNSTR_SECRET_KEY')
+Talisman(app)
 users = json.loads(os.getenv('CUSTOMCONNSTR_USERS'))
 auth = HTTPDigestAuth()
 
