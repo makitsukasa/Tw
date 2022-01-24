@@ -12,3 +12,9 @@ def update_status(body = None):
 		return False
 	tweepy_api.update_status(body)
 	return True
+
+def home_timeline():
+	ret = ""
+	for status in api.home_timeline(count=200):
+		ret += "name:" + status.user.name + "<br>" + status.text + "<br><br>"
+	return ret
