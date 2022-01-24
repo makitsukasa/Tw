@@ -8,7 +8,7 @@ users = json.loads(os.getenv('CUSTOMCONNSTR_USERS'))
 auth = HTTPDigestAuth()
 
 # https://www.mathpython.com/ja/flask-https-redirect
-@app.before_request:
+@app.before_request
 def before_request():
 	if not request.is_secure:
 		url = request.url.replace('http://', 'https://', 1)
