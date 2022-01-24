@@ -26,6 +26,11 @@ def app_route_index():
 	except Exception as e:
 		return "Exception:" + str(traceback.format_exc()), 500
 
+@app.route("/tw")
+@auth.login_required
+def app_route_tw():
+	return render_template('tw.html')
+
 @app.route("/update_status", methods=["POST"])
 @auth.login_required
 def app_route_update_status():
