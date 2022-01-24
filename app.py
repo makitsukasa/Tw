@@ -2,7 +2,7 @@ import os
 import json
 import datetime
 from tweet import update_status
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 
 app = Flask(__name__)
