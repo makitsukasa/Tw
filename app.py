@@ -49,8 +49,8 @@ def app_route_update_status():
 @app.route("/receivepost", methods=["POST"])
 def app_route_receivepost():
 	ret = "HEADER<br>"
-	for k, v in request.headers.items():
-		ret += k + ":" + v + "<br>"
+	for k in request.headers.keys():
+		ret += k + ":" + request.headers[k] + "<br>"
 	ret += "<br>DATA<br>" + request.get_data()
 	return ret
 		
