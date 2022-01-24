@@ -1,7 +1,7 @@
 import os
 import json
 import datetime
-from tweet import update_status
+from tweet import update_status, home_timeline
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 
@@ -30,6 +30,11 @@ def app_route_index():
 @auth.login_required
 def app_route_tw():
 	return render_template('tw.html')
+
+@app.route("/tl")
+@auth.login_required
+def app_route_tl():
+	return home_timeline()
 
 @app.route("/update_status", methods=["POST"])
 @auth.login_required
