@@ -34,7 +34,8 @@ def app_route_tw():
 @app.route("/update_status", methods=["POST"])
 @auth.login_required
 def app_route_update_status():
-	if not update_status():
+	body = request.form.get("body")
+	if not update_status(body):
 		return "/update_status server error", 500
 	return "/update_status post succeeded"
 		
