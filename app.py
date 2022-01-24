@@ -45,6 +45,14 @@ def app_route_update_status():
 	if not update_status(body):
 		return "/update_status server error", 500
 	return "/update_status post succeeded"
+
+@app.route("/receivepost", methods=["POST"])
+def app_route_receivepost():
+	ret = "HEADER<br>"
+	for k, v in request.headers.items():
+		ret += k + ":" + v + "<br>"
+	ret += "<br>DATA<br>" + request.get_data()
+	return ret
 		
 @auth.get_password
 def get_password(username):
