@@ -16,7 +16,7 @@ def update_status(body=None):
 
 def home_timeline():
 	statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
-	f_statuses = [{'info':'', 'rt_info':'' 'text':''} for _ in range(len(statuses))]
+	f_statuses = [{'info':'', 'rt_info':'', 'text':''} for _ in range(len(statuses))]
 	for i, status in enumerate(statuses):
 		f_statuses[i].info = get_jst_str(status.created_at) + ' ' +\
 			status.user.name + ' @' + status.user.screen_name
