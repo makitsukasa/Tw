@@ -5,9 +5,9 @@
 <body>
 	{% for status in home_timeline %}
 		<p>
-			{{ "name:" + status.user.name + "@" + status.user.screen_name + "  " + status.created_at.strftime('%H:%M') }}
+			{{ status.created_at.strftime('%H:%M') + " @" + status.user.screen_name + "  "  + status.user.name }}
 			<br>
-			{{ status.text }}
+			{{ status.full_text }}
 		</p>
 	{% endfor %}
 </body>

@@ -14,4 +14,4 @@ def update_status(body = None):
 	return True
 
 def home_timeline():
-	return tweepy_api.home_timeline(count=200)
+	return tweepy_api.home_timeline(count=200, tweet_mode='extended')
