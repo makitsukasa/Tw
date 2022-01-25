@@ -18,7 +18,7 @@ def home_timeline():
 	statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
 	statuses_str = ['' for _ in range(len(statuses))]
 	for i, s in enumerate(statuses):
-		status_str = get_jst_str(s.created_at) + ' ' + s.user.screen_name + ' @' + s.user.name + '<br>'
+		status_str = get_jst_str(s.created_at) + ' ' + s.user.name + ' @' + s.user.screen_name + '<br>'
 		try: # Retweet
 			status_str += status.retweeted_status.full_text
 		except AttributeError:  # Not a Retweet
