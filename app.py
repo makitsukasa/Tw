@@ -39,7 +39,7 @@ def app_route_update_status():
 	return "/update_status post succeeded"
 
 @app.route("/receive")
-def app_route_receivepost():
+def app_route_receive():
 	return "HRADER<br>" + str(request.headers) + "<br><br>"
 		"DATA<br>" + request.get_data(as_text=True)
 		
