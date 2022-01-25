@@ -7,7 +7,7 @@ AUTH = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 AUTH.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 tweepy_api = tweepy.API(AUTH)
 
-def update_status(body = None):
+def update_status(body=None):
 	if not body:
 		return False
 	tweepy_api.update_status(body)

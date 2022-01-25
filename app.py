@@ -15,10 +15,7 @@ auth = HTTPDigestAuth()
 @app.route('/')
 @auth.login_required
 def app_route_index():
-	try:
-		return 'Hello, ' + auth.username()
-	except Exception as e:
-		return 'Exception:' + str(traceback.format_exc()), 500
+	return 'Hello, ' + auth.username()
 
 @app.route('/tw')
 @auth.login_required
