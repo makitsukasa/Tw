@@ -38,9 +38,9 @@ def app_route_update_status():
 		return "/update_status server error", 500
 	return "/update_status post succeeded"
 
-@app.route("/receivepost", methods=["POST"])
+@app.route("/receive")
 def app_route_receivepost():
-	return "HRADER<br>" + str(request.headers) + "<br><br>" + \
+	return "HRADER<br>" + str(request.headers) + "<br><br>"
 		"DATA<br>" + request.get_data(as_text=True)
 		
 @auth.get_password
