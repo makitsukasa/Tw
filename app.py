@@ -41,7 +41,7 @@ def app_route_update_status():
 @app.route("/receivepost", methods=["POST"])
 def app_route_receivepost():
 	return "HRADER<br>" + str(request.headers) + "<br><br>" + \
-		"DATA<br>" + request.get_data()
+		"DATA<br>" + request.get_data(as_text=True)
 		
 @auth.get_password
 def get_password(username):
