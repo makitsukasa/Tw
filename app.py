@@ -12,14 +12,6 @@ Talisman(app)
 users = json.loads(os.getenv('CUSTOMCONNSTR_USERS'))
 auth = HTTPDigestAuth()
 
-# https://www.mathpython.com/ja/flask-https-redirect
-# @app.before_request
-# def before_request():
-# 	if not request.is_secure:
-# 		url = request.url.replace('http://', 'https://', 1)
-# 		code = 301
-# 		return redirect(url, code=code)
-
 @app.route("/")
 @auth.login_required
 def app_route_index():
@@ -48,11 +40,8 @@ def app_route_update_status():
 
 @app.route("/receivepost", methods=["POST"])
 def app_route_receivepost():
-	ret = "HEADER<br>"
-	for k, v in dict(request.headers).items():
-		ret += k + ":" + v + "<br>"
-	ret += "<br>DATA<br>" + request.get_data()
-	return ret
+	return "HRADER<br>" + str(request.headers) + "<br><br>" +
+		"DATA<br>" + request.get_data()
 		
 @auth.get_password
 def get_password(username):
