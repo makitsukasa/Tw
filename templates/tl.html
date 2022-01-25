@@ -1,0 +1,13 @@
+<!doctype html>
+<head>
+	<title>tl</title>
+</head>
+<body>
+	{% for status in home_timeline %}
+		<p>
+			{{ "name:" + status.user.name + "@" + status.user.screen_name + "  " + status.created_at.strftime('%H:%M') }}
+			<br>
+			{{ status.text }}
+		</p>
+	{% endfor %}
+</body>

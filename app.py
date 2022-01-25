@@ -28,7 +28,7 @@ def app_route_tw():
 @app.route("/tl")
 @auth.login_required
 def app_route_tl():
-	return home_timeline()
+	return render_template('tl.html', home_timeline = home_timeline())
 
 @app.route("/update_status", methods=["POST"])
 @auth.login_required

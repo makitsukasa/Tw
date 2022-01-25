@@ -14,8 +14,4 @@ def update_status(body = None):
 	return True
 
 def home_timeline():
-	ret = ""
-	for status in tweepy_api.home_timeline(count=200):
-		ret += "name:" + status.user.name + "@" + status.user.screen_name + "  " +\
-			status.created_at.strftime('%H:%M') + "<br>" + status.text + "<br><br>"
-	return ret
+	return tweepy_api.home_timeline(count=200)
