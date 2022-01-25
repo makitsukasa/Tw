@@ -40,9 +40,9 @@ def app_route_update_status():
 
 @app.route("/receive")
 def app_route_receive():
-	return "HRADER<br>" + str(request.headers) + "<br><br>"
+	return "HRADER<br>" + str(request.headers) + "<br><br>" +\
 		"DATA<br>" + request.get_data(as_text=True)
-		
+
 @auth.get_password
 def get_password(username):
     if username in users:
