@@ -27,4 +27,4 @@ def home_timeline():
 			f_statuses[i]['text'] = r.full_text
 		except AttributeError:  # Not a Retweet
 			f_statuses[i]['text'] = status.full_text
-	return statuses_str
+	return f_statuses
