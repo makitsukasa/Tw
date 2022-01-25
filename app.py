@@ -2,6 +2,7 @@ import os
 import json
 import datetime
 from tweet import update_status, home_timeline
+import util
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman

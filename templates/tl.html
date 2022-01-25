@@ -5,7 +5,7 @@
 <body>
 	{% for status in home_timeline %}
 		<p>
-			{{ get_jst_str(status.created_at) + ' @' + status.user.screen_name + ' '  + status.user.name }}
+			{{ util.get_jst_str(status.created_at) + ' @' + status.user.screen_name + ' '  + status.user.name }}
 			<br>
 			{{ status.full_text }}
 		</p>
