@@ -4,10 +4,6 @@
 </head>
 <body>
 	{% for status in home_timeline %}
-		<p>
-			{{ status.created_at_jst + ' @' + status.user.screen_name + ' '  + status.user.name }}
-			<br>
-			{{ status.full_text }}
-		</p>
+		<p>{{ status }}</p>
 	{% endfor %}
 </body>
