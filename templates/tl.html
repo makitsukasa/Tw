@@ -5,7 +5,7 @@
 <body>
 	{% for status in home_timeline %}
 		<p>
-			{{ status.created_at.astimezone(timezone(timedelta(hours=+9))).strftime('%H:%M') + ' @' + status.user.screen_name + ' '  + status.user.name }}
+			{{ status.created_at_jst + ' @' + status.user.screen_name + ' '  + status.user.name }}
 			<br>
 			{{ status.full_text }}
 		</p>

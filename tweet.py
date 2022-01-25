@@ -1,5 +1,6 @@
 import os
 import tweepy
+from util import get_jst_str
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
 CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = TWITTER_KEYS.split(';')
@@ -14,4 +15,7 @@ def update_status(body=None):
 	return True
 
 def home_timeline():
-	return tweepy_api.home_timeline(count=200, tweet_mode='extended')
+	statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
+	for i in range(len(statuses)):
+		statuses[i].created_at_jst = get_jst_str(statuses[i].created_at)
+	return statuses
