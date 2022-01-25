@@ -4,6 +4,11 @@
 </head>
 <body>
 	{% for status in home_timeline %}
-		<p>{{ status }}</p>
+		<p>
+			{{ status.info }}
+			{{ status.rt_info }}
+			<br>
+			{{ status.text }}
+		</p>
 	{% endfor %}
 </body>
