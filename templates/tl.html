@@ -5,9 +5,9 @@
 <body>
 	{% for status in home_timeline %}
 		<p>
-			{{ status['info'] }}
-			{% if status['rt_info'] != '' %}
-				Retweeted: {{ status['rt_info'] }}
+			{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
+			{% if status['is_rt'] %}
+				Retweeted: {{ status['rt_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 			{% endif %}
 			<br>
 			{{ status['text'] }}

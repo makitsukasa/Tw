@@ -15,16 +15,20 @@ def update_status(body=None):
 	return True
 
 def home_timeline():
-	statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
-	f_statuses = [{'info':'', 'rt_info':'', 'text':''} for _ in range(len(statuses))]
+	raw_statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
+	statuses = [{} for _ in range(len(statuses))]
 	for i, status in enumerate(statuses):
-		f_statuses[i]['info'] = get_jst_str(status.created_at) + ' ' +\
-			status.user.name + ' @' + status.user.screen_name
+		status[i]['created_at'] = get_jst_HM(status.created_at)
+		status[i]['name'] = status.user.name
+		status[i]['screen_name'] = status.user.screen_name
 		try: # Retweet
 			rs = status.retweeted_status
-			f_statuses[i]['rt_info'] = get_jst_str(rs.created_at) + ' ' +\
-				rs.user.name + ' @' + rs.user.screen_name
-			f_statuses[i]['text'] = rs.full_text
+			status[i]['is_rt'] = True
+			status[i]['rt_at'] = get_jst_YMDHM(rs.created_at)
+			status[i]['rt_name'] = status.user.name
+			status[i]['rt_screen_name'] = status.user.screen_name
+			statuses[i]['text'] = rs.full_text
 		except AttributeError:  # Not a Retweet
-			f_statuses[i]['text'] = status.full_text
-	return f_statuses
+			status[i]['is_rt'] = False
+			statuses[i]['text'] = status.full_text
+	return statuses
