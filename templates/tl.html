@@ -7,7 +7,7 @@
 		<p>
 			{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 			{% if status['is_rt'] %}
-				Retweeted: {{ status['rt_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
+				Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 			{% endif %}
 			<br>
 			{{ status['text'] }}
