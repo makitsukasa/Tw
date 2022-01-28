@@ -21,10 +21,10 @@ def home_timeline():
 		f_statuses[i]['info'] = get_jst_str(status.created_at) + ' ' +\
 			status.user.name + ' @' + status.user.screen_name
 		try: # Retweet
-			r = status.retweeted_status
-			f_statuses[i]['rt_info'] = get_jst_str(r.created_at) + ' ' +\
-				r.user.name + ' @' + r.user.screen_name
-			f_statuses[i]['text'] = r.full_text
+			rs = status.retweeted_status
+			f_statuses[i]['rt_info'] = get_jst_str(rs.created_at) + ' ' +\
+				rs.user.name + ' @' + rs.user.screen_name
+			f_statuses[i]['text'] = rs.full_text
 		except AttributeError:  # Not a Retweet
 			f_statuses[i]['text'] = status.full_text
 	return f_statuses
