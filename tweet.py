@@ -1,6 +1,6 @@
 import os
 import tweepy
-from util import get_jst_str
+from util import get_jst_HM, get_jst_YMDHM
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
 CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = TWITTER_KEYS.split(';')
