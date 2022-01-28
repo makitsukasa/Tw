@@ -2,7 +2,6 @@ import os
 import json
 from datetime import timezone, timedelta
 from tweet import update_status, home_timeline
-from util import get_jst_str
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
