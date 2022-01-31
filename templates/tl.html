@@ -1,27 +1,22 @@
 <!doctype html>
 <head>
 	<title>tl</title>
-	<script>
-		function toggleDisplay(id) {
-			style = document.getElementById(id).style;
-			style.display = (style.display == 'none') ? 'block' : 'none';
-		}
-	</script>
+	<script src='static/js/tl.js'></script>
 </head>
 <body>
 	{% for status in home_timeline %}
 		<p>
-			<span onclick='toggleDisplay({{ loop.index0 }})'>
+			<div onclick='toggleDisplay({{ loop.index0 }})'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 				{% if status['is_rt'] %}
 					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 				{% endif %}
 				<br>
 				{{ status['text'] }}
-			</span>
-			<span id='{{ loop.index0 }}' style='display: none; clear: both;'>
+			</div>
+			<div id='{{ loop.index0 }}' style='display: none; clear: both;'>
 				hogehogehogehoge
-			</span>
+			</div>
 		</p>
 	{% endfor %}
 </body>
