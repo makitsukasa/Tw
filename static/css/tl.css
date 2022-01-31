@@ -1,24 +1,14 @@
-/* https://webdesignday.jp/inspiration/technique/css/5316 */
+/* https://developer.mozilla.org/ja/docs/Web/CSS/transition */
 
-.acd-check{
-	display: none;
-}
-.acd-label{
-	display: block;
-	margin-bottom: 1px;
-	padding: 10px;
-}
-.acd-content{
+.buttons{
 	border: 1px solid #333;
 	height: 0;
 	opacity: 0;
 	padding: 0 10px;
-	transition: 0.01s;
-	/*visibility: hidden;*/
+	transition: 0.07s;
 }
-.acd-check:checked + .acd-label + .acd-content{
-	height: 40px;
+.status:hover > .buttons{
+	height: auto;
 	opacity: 1;
-	padding: 10px;
 	visibility: visible;
 }
