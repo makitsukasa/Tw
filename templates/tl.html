@@ -5,19 +5,17 @@
 </head>
 <body>
 	{% for status in home_timeline %}
-		<p>
-			<input id='acd-check-{{ loop.index0 }}' class='acd-check' type='checkbox'>
-			<div class='acd-label' for='acd-check-{{ loop.index0 }}'>
-				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
-				{% if status['is_rt'] %}
-					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
-				{% endif %}
-				<br>
-				{{ status['text'] }}
-			</div>
-			<div class='acd-content'>
-				hogehogehogehoge
-			</div>
-		</p>
+		<input id='acd-check-{{ loop.index0 }}' class='acd-check' type='checkbox'>
+		<div class='acd-label' for='acd-check-{{ loop.index0 }}'>
+			{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
+			{% if status['is_rt'] %}
+				Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
+			{% endif %}
+			<br>
+			{{ status['text'] }}
+		</div>
+		<div class='acd-content'>
+			hogehogehogehoge
+		</div>
 	{% endfor %}
 </body>
