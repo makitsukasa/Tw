@@ -1,12 +1,13 @@
 <!doctype html>
 <head>
 	<title>tl</title>
-	<script src='static/js/tl.js'></script>
+	<link rel='stylesheet' href='static/css/tl.css'>
 </head>
 <body>
 	{% for status in home_timeline %}
 		<p>
-			<div onclick='toggleDisplay({{ loop.index0 }})'>
+			<input id='acd-check-{{ loop.index0 }}' class='acd-check' type='checkbox'>
+			<div class='acd-label' for='acd-check-{{ loop.index0 }}'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 				{% if status['is_rt'] %}
 					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
@@ -14,7 +15,7 @@
 				<br>
 				{{ status['text'] }}
 			</div>
-			<div id='{{ loop.index0 }}'>
+			<div class='acd-content'>
 				hogehogehogehoge
 			</div>
 		</p>

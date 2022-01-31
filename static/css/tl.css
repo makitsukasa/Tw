@@ -1,4 +1,24 @@
-div.buttons {
+/* https://webdesignday.jp/inspiration/technique/css/5316 */
+
+.acd-check{
 	display: none;
-	clear: both;
+}
+.acd-label{
+	display: block;
+	margin-bottom: 1px;
+	padding: 10px;
+}
+.acd-content{
+	border: 1px solid #333;
+	height: 0;
+	opacity: 0;
+	padding: 0 10px;
+	transition: 0.01s;
+	/*visibility: hidden;*/
+}
+.acd-check:checked + .acd-label + .acd-content{
+	height: 40px;
+	opacity: 1;
+	padding: 10px;
+	visibility: visible;
 }
