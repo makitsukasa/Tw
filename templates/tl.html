@@ -20,7 +20,7 @@
 				<button class='button fav_button'>fav</button>
 				<button class='button rt_button'>rt</button>
 				{% for url in status['media'] %}
-					<button class='button img_button' onclick='window.open("{{ url }}")'>img</button>
+					<a href='{{ url }}' target='_blank' class='button img_button'>img</a>
 				{% endfor %}
 			</p>
 		</div>
