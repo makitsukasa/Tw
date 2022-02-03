@@ -37,7 +37,7 @@ def home_timeline():
 		if not 'media' in s.entities: # has no media
 			statuses[i]['media'] = []
 		else:                         # has media
-			statuses[i]['media'] = [None for _ in len(s.entities['media'])]
+			statuses[i]['media'] = [None for _ in range(len(s.entities['media']))]
 			for j, media in enumerate(s.entities['media']):
 				statuses[i]['media'][j] = media['media_url']
 
