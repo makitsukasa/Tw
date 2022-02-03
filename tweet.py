@@ -22,20 +22,22 @@ def home_timeline():
 		statuses[i]['created_at'] = get_jst_HM(s.created_at)
 		statuses[i]['name'] = s.user.name
 		statuses[i]['screen_name'] = s.user.screen_name
-		try: # Retweet
+
+		try:                          # Retweet
 			rs = s.retweeted_status
 			statuses[i]['is_rt'] = True
 			statuses[i]['rt_created_at'] = get_jst_YMDHM(rs.created_at)
 			statuses[i]['rt_name'] = rs.user.name
 			statuses[i]['rt_screen_name'] = rs.user.screen_name
 			statuses[i]['text'] = rs.full_text
-		except AttributeError:  # Not a Retweet
+		except AttributeError:        # Not a Retweet
 			statuses[i]['is_rt'] = False
 			statuses[i]['text'] = s.full_text
-		if not 'media' in s.entities:
+
+		if not 'media' in s.entities: # has no media
 			statuses[i]['media'] = []
-		else:
-			statuses[i]['media'] = [None for _ in len(s['media'])]
+		else:                         # has media
+			statuses[i]['media'] = [None for _ in len(s.entities['media'])]
 			for j, media in enumerate(s.entities['media']):
 				statuses[i]['media'][j] = media['media_url']
 
