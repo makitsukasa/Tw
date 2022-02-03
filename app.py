@@ -35,6 +35,13 @@ def app_route_update_status():
 		return '/update_status server error', 500
 	return '/update_status post succeeded'
 
+@app.route('/create_favorite/<string:id>', methods=['POST'])
+@auth.login_required
+def app_route_create_favorite(id):
+	if not create_favorite(id):
+		return '/create_favorite server error', 500
+	return '/create_favorite post succeeded'
+
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
 	return 'HRADER<br>' + str(request.headers) + '<br><br>' +\

@@ -18,6 +18,7 @@ def home_timeline():
 	raw_statuses = tweepy_api.home_timeline(count=200, tweet_mode='extended')
 	statuses = [{} for _ in range(len(raw_statuses))]
 	for i, s in enumerate(raw_statuses):
+		statuses[i]['id'] = s.id_str
 		statuses[i]['created_at'] = get_jst_HM(s.created_at)
 		statuses[i]['name'] = s.user.name
 		statuses[i]['screen_name'] = s.user.screen_name
@@ -32,3 +33,12 @@ def home_timeline():
 			statuses[i]['is_rt'] = False
 			statuses[i]['text'] = s.full_text
 	return statuses
+
+def create_favorite(id):
+	pass
+
+def destroy_favorite():
+	pass
+
+def retweet():
+	pass

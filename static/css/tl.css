@@ -23,7 +23,7 @@
 	margin: 0;
 }
 
-.status > .buttons{
+.status > .buttons {
 	height: 0;
 	padding: 0;
 	margin: 0;
@@ -31,7 +31,7 @@
 	transition: 0.07s;
 }
 
-.status:hover > .buttons{
+.status:hover > .buttons {
 	height: auto;
 	padding: 0 0 0 0.2em;
 	opacity: 1;

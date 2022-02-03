@@ -2,10 +2,11 @@
 <head>
 	<title>tl</title>
 	<link rel='stylesheet' href='static/css/tl.css'>
+	<script src='static/js/tl.js'></script>
 </head>
 <body>
 	{% for status in home_timeline %}
-		<div class='status'>
+		<div class='status' id="{{ status['id'] }}">
 			<p class='info'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 				{% if status['is_rt'] %}
