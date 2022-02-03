@@ -35,10 +35,18 @@ def home_timeline():
 	return statuses
 
 def create_favorite(id):
-	tweepy_api.create_favorite(id)
+	try:
+		tweepy_api.create_favorite(id)
+		return True
+	except Exception as e:
+		return False
 
 def retweet():
-	tweepy_api.retweet(id)
+	try:
+		tweepy_api.retweet(id)
+		return True
+	except Exception as e:
+		return False
 
 def show_image():
 	pass
