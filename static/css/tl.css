@@ -1,7 +1,10 @@
 /* https://developer.mozilla.org/ja/docs/Web/CSS/transition */
 
-.buttons{
+.status:hover {
 	border: 1px solid #333;
+}
+
+.buttons{
 	height: 0;
 	opacity: 0;
 	padding: 0 10px;

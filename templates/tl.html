@@ -5,18 +5,16 @@
 </head>
 <body>
 	{% for status in home_timeline %}
-		<p class='status'>
-			<div>
-				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
-				{% if status['is_rt'] %}
-					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
-				{% endif %}
-				<br>
-				{{ status['text'] }}
-			</div>
-			<div class='buttons'>
+		<div class='status'>
+			{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
+			{% if status['is_rt'] %}
+				Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
+			{% endif %}
+			<br>
+			{{ status['text'] }}
+			<p class='buttons'>
 				fav rt img
-			</div>
-		</p>
+			</p>
+		</div>
 	{% endfor %}
 </body>
