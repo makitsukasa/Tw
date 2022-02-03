@@ -32,6 +32,13 @@ def home_timeline():
 		except AttributeError:  # Not a Retweet
 			statuses[i]['is_rt'] = False
 			statuses[i]['text'] = s.full_text
+		if not 'media' in s.entities:
+			statuses[i]['media'] = []
+		else:
+			statuses[i]['media'] = [None for _ in len(s['media'])]
+			for j, media in enumerate(s.entities['media']):
+				statuses[i]['media'][j] = media['media_url']
+
 	return statuses
 
 def create_favorite(id):
@@ -41,12 +48,9 @@ def create_favorite(id):
 	except Exception as e:
 		return False
 
-def retweet():
+def retweet(id):
 	try:
 		tweepy_api.retweet(id)
 		return True
 	except Exception as e:
 		return False
-
-def show_image():
-	pass
