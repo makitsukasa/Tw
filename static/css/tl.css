@@ -7,7 +7,7 @@
 }
 
 .status:hover {
-	border: 1px solid #aaa;
+	border: 1px solid #AAA;
 	padding: 0.2em 0 0 0.2em;
 }
 
@@ -36,4 +36,22 @@
 	padding: 0 0 0 0.2em;
 	opacity: 1;
 	visibility: visible;
+}
+
+/* https://kyoheiomi.com/design/css_button_design */
+.status:hover > .buttons > .button {
+	display: block;
+	position: relative;
+	width: 160px;
+	padding: 0.8em;
+	text-align: center;
+	text-decoration: none;
+	color: #1B1B1B;
+	background: #FFF;
+	border:1px solid #FFF;
+}
+.status:hover > .buttons > .button:hover {
+	 background: #F2F2F2;
+	 cursor: pointer;
+	 text-decoration: none;
 }
