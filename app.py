@@ -2,7 +2,7 @@ import os
 import json
 from datetime import timezone, timedelta
 from tweet import update_status, home_timeline
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
 
@@ -38,6 +38,7 @@ def app_route_update_status():
 @app.route('/create_favorite/<string:id>', methods=['POST'])
 @auth.login_required
 def app_route_create_favorite(id):
+	flash(id)
 	if not create_favorite(id):
 		return '/create_favorite server error', 500
 	return '/create_favorite post succeeded'
