@@ -35,10 +35,10 @@ def home_timeline():
 	return statuses
 
 def create_favorite(id):
-	pass
-
-def destroy_favorite():
-	pass
+	tweepy_api.create_favorite(id)
 
 def retweet():
+	tweepy_api.retweet(id)
+
+def show_image():
 	pass

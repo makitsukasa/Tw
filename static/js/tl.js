@@ -1,9 +1,10 @@
+// https://stackoverflow.com/questions/28879696/equivalent-of-getjson-function-without-jquery
 function createFavorite(e) {
 	e.preventDefault();
 	const id = e.target.parentElement.parentElement.id;
 	const request = new XMLHttpRequest();
 	request.onload = () => {};
-	request.open('get', '/create_favorite/' + id, true);
+	request.open('post', '/create_favorite/' + id, true);
 	request.send();
 	return false;
 }
@@ -13,17 +14,17 @@ function retweet(e) {
 	const id = e.target.parentElement.parentElement.id;
 	const request = new XMLHttpRequest();
 	request.onload = () => {};
-	request.open('get', '/retweet/' + id, true);
+	request.open('post', '/retweet/' + id, true);
 	request.send();
 	return false;
 }
 
-function showImg(e) {
+function showImage(e) {
 	e.preventDefault();
 	const id = e.target.parentElement.parentElement.id;
 	const request = new XMLHttpRequest();
 	request.onload = () => {};
-	request.open('get', '/show_img/' + id, true);
+	request.open('post', '/show_image/' + id, true);
 	request.send();
 	return false;
 }
@@ -41,6 +42,6 @@ window.addEventListener('load', function(){
 
 	const imgButtons = document.getElementsByClassName('img_button');
 	for(let i = 0; i < imgButtons.length; i++) {
-		imgButtons[i].addEventListener('click', showImg, false);
+		imgButtons[i].addEventListener('click', showImage, false);
 	}
 }, false);
