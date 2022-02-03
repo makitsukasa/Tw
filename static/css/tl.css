@@ -1,23 +1,25 @@
 /* https://developer.mozilla.org/ja/docs/Web/CSS/transition */
+/* https://webgoto.net/html5 */
 
 .status {
 	width: auto;
-	padding: 0.4em;
+	padding: 0.3em;
 }
 
 .status:hover {
-	border: 1px solid #888;
+	border: 1px solid #aaa;
+	padding: 0.2em 0 0 0.2em;
 }
 
 .status > .info {
-	height: 0;
+	height: auto;
 	padding: 0;
 	margin: 0;
 }
 
 .status > .text {
-	height: 0;
-	padding: 0 0 0 1em;
+	height: auto;
+	padding: 0 0 0 0.5em;
 	margin: 0;
 }
 
@@ -31,7 +33,7 @@
 
 .status:hover > .buttons{
 	height: auto;
-	margin: 3px;
+	padding: 0 0 0 0.2em;
 	opacity: 1;
 	visibility: visible;
 }
