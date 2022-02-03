@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import timezone, timedelta
-from tweet import update_status, home_timeline, create_favorite
+from tweet import update_status, home_timeline, create_favorite, retweet
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
@@ -41,6 +41,13 @@ def app_route_create_favorite(id):
 	if not create_favorite(id):
 		return '/create_favorite server error', 500
 	return '/create_favorite post succeeded'
+
+@app.route('/retweet/<string:id>', methods=['POST'])
+@auth.login_required
+def app_route_retweet(id):
+	if not retweet(id):
+		return '/retweet server error', 500
+	return '/retweet post succeeded'
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
