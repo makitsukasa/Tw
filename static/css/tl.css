@@ -1,18 +1,37 @@
 /* https://developer.mozilla.org/ja/docs/Web/CSS/transition */
 
-.status:hover {
-	border: 1px solid #333;
+.status {
+	width: auto;
+	padding: 0.4em;
 }
 
-.buttons{
+.status:hover {
+	border: 1px solid #888;
+}
+
+.status > .info {
 	height: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.status > .text {
+	height: 0;
+	padding: 0 0 0 1em;
+	margin: 0;
+}
+
+.status > .buttons{
+	height: 0;
+	padding: 0;
+	margin: 0;
 	opacity: 0;
-	padding: 0 10px;
 	transition: 0.07s;
 }
+
 .status:hover > .buttons{
 	height: auto;
-	width: auto;
+	margin: 3px;
 	opacity: 1;
 	visibility: visible;
 }
