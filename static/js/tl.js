@@ -25,7 +25,7 @@ function retweet(e) {
 	e.preventDefault();
 	const id = e.target.parentElement.parentElement.id;
 	const request = new XMLHttpRequest();
-	request.onload = () => {console.log('onload');reactRt(id);return false;};
+	request.onload = () => {reactRt(id)};
 	request.onerror = () => {reactRt(id, false)};
 	request.open('post', '/retweet/' + id, true);
 	request.send();
@@ -38,11 +38,9 @@ function reactFav(id, succeed=true) {
 	const favButton = document.querySelector(`${q} > .fav_button`);
 	const unfavButton = document.querySelector(`${q} > .unfav_button`);
 	if (succeed) {
-		console.log('fav succeed ' + id);
 		favButton.disabled = true;
 		unfavButton.disabled = false;
 	} else {
-		console.log('fav failed ' + id);
 		favButton.innerHTML += ' ✕';
 	}
 }
@@ -52,11 +50,9 @@ function reactUnfav(id, succeed=true) {
 	const favButton = document.querySelector(`${q} > .fav_button`);
 	const unfavButton = document.querySelector(`${q} > .unfav_button`);
 	if (succeed) {
-		console.log('unfav succeed ' + id);
 		favButton.disabled = false;
 		unfavButton.disabled = true;
 	} else {
-		console.log('unfav failed ' + id);
 		unfavButton.innerHTML += ' ✕';
 	}
 }
@@ -65,10 +61,8 @@ function reactRt(id, succeed=true) {
 	const q = `#\\3${id.slice(0, 1)} ${id.slice(1)} > .buttons`;
 	const rtButton = document.querySelector(`${q} > .rt_button`);
 	if (succeed) {
-		console.log('rt succeed ' + id);
 		rtButton.innerHTML += ' ✓';
 	} else {
-		console.log('rt failed ' + id);
 		rtButton.innerHTML += ' ✕';
 	}
 }
