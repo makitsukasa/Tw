@@ -44,7 +44,7 @@ def app_route_create_favorite(id):
 
 @app.route('/destroy_favorite/<string:id>', methods=['POST'])
 @auth.login_required
-def app_route_create_favorite(id):
+def app_route_destroy_favorite(id):
 	if not destroy_favorite(id):
 		return '/destroy_favorite server error', 500
 	return '/destroy_favorite post succeeded'
