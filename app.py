@@ -61,6 +61,10 @@ def app_route_receive():
 	return 'HRADER<br>' + str(request.headers) + '<br><br>' +\
 		'DATA<br>' + request.get_data(as_text=True)
 
+@app.before_request
+def app_before_request():
+	app.logger.debug('before_request')
+
 @auth.get_password
 def get_password(username):
 	if username in users:
