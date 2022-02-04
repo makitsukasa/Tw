@@ -38,22 +38,43 @@
 	visibility: visible;
 }
 
-/* https://kyoheiomi.com/design/css_button_design */
+/* https://goflb1238.hatenablog.jp/entry/2014/02/11/145531 aタグとbuttonの見た目を揃える */
+/* https://kyoheiomi.com/design/css_button_design CSSで作る汎用性の高いシンプルなボタンデザイン20 */
 .status > .buttons > .button {
+	font-family: normal;
+	font-size: 12px;
+	/*color: #000;*/
+	text-shadow: none;
+	text-decoration: none;
+	-webkit-text-decoration: none;
+	display: inline-block;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	/*background: none;*/
+	/*border: none;*/
+	outline: none;
+	/*padding: 0;*/
+	/*margin: 0;*/
+	cursor: pointer;
+
 	position: relative;
 	width: 5em;
 	border: 0;
 	padding: 0.2em;
 	text-align: center;
-	text-decoration: none;
 	color: #000;
 	background: #F2F2F2;
 	transition: 0.1s;
 }
 
-.status:hover > .buttons > .button:hover {
+.status > .buttons > .button:hover {
+	color: #FFF;
 	 background: #AAA;
-	 color: #fff;
-	 cursor: pointer;
-	 text-decoration: none;
+}
+
+.status > .buttons > .button:disabled {
+	color: #FFF;
+	background: #888;
+	cursor: not-allowed;
 }
