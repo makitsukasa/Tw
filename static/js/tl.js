@@ -30,8 +30,8 @@ function retweet(e) {
 }
 
 function toggleFavButton(id) {
-	const favButton = document.querySelector(`#{id} > .buttons > .fav_button`);
-	const unfavButton = document.querySelector(`#{id} > .buttons > .unfav_button`);
+	const favButton = document.querySelector(`#${id} > .buttons > .fav_button`);
+	const unfavButton = document.querySelector(`#${id} > .buttons > .unfav_button`);
 	favButton.disabled = !favButton.disabled
 	unfavButton.disabled = !unfavButton.disabled
 }
