@@ -74,8 +74,9 @@
 }
 
 .status > .buttons > .button:disabled {
-	color: #FFF;
-	background: #888;
+	color: #888;
+	background: #FFF;
+	border: 1px solid #F2F2F2;
 	cursor: not-allowed;
 	text-decoration: line-through;
 }
