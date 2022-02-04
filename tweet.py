@@ -52,6 +52,13 @@ def create_favorite(id):
 	except Exception as e:
 		return False
 
+def destroy_favorite(id):
+	try:
+		tweepy_api.destroy_favorite(id)
+		return True
+	except Exception as e:
+		return False
+
 def retweet(id):
 	try:
 		tweepy_api.retweet(id)
