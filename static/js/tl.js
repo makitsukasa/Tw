@@ -30,8 +30,10 @@ function retweet(e) {
 }
 
 function toggleFavButton(id) {
-	const favButton = document.querySelector(`#${id} > .buttons > .fav_button`);
-	const unfavButton = document.querySelector(`#${id} > .buttons > .unfav_button`);
+	// https://qiita.com/ka-ko/items/feacb4d3ff22666d51b1
+	const q = `#\\3${id.slice(0, 1)} ${id.slice(1)} > .buttons`;
+	const favButton = document.querySelector(`${q} > .fav_button`);
+	const unfavButton = document.querySelector(`${q} > .unfav_button`);
 	favButton.disabled = !favButton.disabled
 	unfavButton.disabled = !unfavButton.disabled
 }
