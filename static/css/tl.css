@@ -68,22 +68,22 @@
 	transition: 0.1s;
 }
 
-.status > .buttons > .indicator {
-	color: #000;
-	background: #FFF;
-	border: 1px solid #AAA;
-	cursor: not-allowed;
-}
-
-.status > .buttons > .button:hover {
+.status > .buttons > .button:not(.indicator):hover {
 	color: #FFF;
 	 background: #AAA;
 }
 
-.status > .buttons > .button:disabled {
+.status > .buttons > .button:not(.indicator):disabled {
 	color: #888;
 	background: #FFF;
 	border: 1px solid #F2F2F2;
-	cursor: not-allowed;
+	cursor: default;
 	text-decoration: line-through;
+}
+
+.status > .buttons > .indicator {
+	color: #888;
+	background: #FFF;
+	border: 1px solid #F2F2F2;
+	cursor: default;
 }
