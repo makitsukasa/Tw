@@ -63,7 +63,12 @@ def app_route_receive():
 
 @app.before_request
 def app_before_request():
-	print('before_request')
+	print('request.remote_addr')
+	print(request.remote_addr)
+	print('request.access_route')
+	for r in request.access_route:
+		print(r)
+	print()
 
 @auth.get_password
 def get_password(username):
