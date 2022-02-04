@@ -68,6 +68,13 @@
 	transition: 0.1s;
 }
 
+.status > .buttons > .indicator {
+	color: #000;
+	background: #FFF;
+	border: 1px solid #AAA;
+	cursor: not-allowed;
+}
+
 .status > .buttons > .button:hover {
 	color: #FFF;
 	 background: #AAA;
