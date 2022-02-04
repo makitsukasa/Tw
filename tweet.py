@@ -23,7 +23,7 @@ def home_timeline():
 		statuses[i]['name'] = s.user.name
 		statuses[i]['screen_name'] = s.user.screen_name
 		statuses[i]['can_fav'] = not s.favorited
-		statuses[i]['can_rt'] = not s.user.protedted
+		statuses[i]['can_rt'] = not s.user.protected
 
 		try:                          # is retweet
 			rs = s.retweeted_status
