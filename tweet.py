@@ -22,19 +22,19 @@ def home_timeline():
 		statuses[i]['created_at'] = get_jst_HM(s.created_at)
 		statuses[i]['name'] = s.user.name
 		statuses[i]['screen_name'] = s.user.screen_name
-		statuses[i]['can_fav'] = not s.favorited
-		statuses[i]['can_rt'] = not s.user.protected
 
 		try:                          # is retweet
-			rs = s.retweeted_status
+			s = s.retweeted_status
 			statuses[i]['is_rt'] = True
-			statuses[i]['rt_created_at'] = get_jst_YMDHM(rs.created_at)
-			statuses[i]['rt_name'] = rs.user.name
-			statuses[i]['rt_screen_name'] = rs.user.screen_name
-			statuses[i]['text'] = rs.full_text
+			statuses[i]['rt_created_at'] = get_jst_YMDHM(s.created_at)
+			statuses[i]['rt_name'] = s.user.name
+			statuses[i]['rt_screen_name'] = s.user.screen_name
 		except AttributeError:        # is not retweet
 			statuses[i]['is_rt'] = False
-			statuses[i]['text'] = s.full_text
+
+		statuses[i]['text'] = s.full_text
+		statuses[i]['can_fav'] = not s.favorited
+		statuses[i]['can_rt'] = not s.user.protected
 
 		if not 'media' in s.entities: # has no media
 			statuses[i]['media'] = []
