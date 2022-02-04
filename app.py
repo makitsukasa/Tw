@@ -63,7 +63,7 @@ def app_route_receive():
 
 @app.before_request
 def app_before_request():
-	app.logger.debug('before_request')
+	print('before_request')
 
 @auth.get_password
 def get_password(username):
