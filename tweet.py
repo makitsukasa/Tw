@@ -35,6 +35,7 @@ def home_timeline():
 		statuses[i]['text'] = s.full_text
 		statuses[i]['can_fav'] = not s.favorited
 		statuses[i]['can_rt'] = not s.user.protected
+		statuses[i]['in_reply_to'] = s.in_reply_to_status_id_str # id_str or None
 
 		if not 'media' in s.entities: # has no media
 			statuses[i]['media'] = []
