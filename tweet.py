@@ -36,7 +36,7 @@ def home_timeline():
 		statuses[i]['can_fav'] = not s.favorited
 		statuses[i]['can_rt'] = not s.user.protected
 
-		if not 'media' in s.extended_entities: # has no media
+		if not 'media' in s.entities: # has no media
 			statuses[i]['media'] = []
 		else:                         # has media
 			statuses[i]['media'] = [None for _ in range(len(s.extended_entities['media']))]
