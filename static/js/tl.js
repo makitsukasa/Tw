@@ -35,19 +35,6 @@ function retweet(e) {
 	return false;
 }
 
-function showImage(e) {
-	e.preventDefault();
-	const id = e.target.parentElement.parentElement.id;
-	const index = e.target.value;
-	const request = new XMLHttpRequest();
-	request.onload = () => {};
-	request.onerror = () => {};
-	request.open('post', '/show_image', true);
-	request.setRequestHeader("Content-Type", "application/json");
-	request.send(JSON.stringify({'id': id, 'index': index}));
-	return false;
-}
-
 function reactFavSucceed(id) {
 	// https://qiita.com/ka-ko/items/feacb4d3ff22666d51b1
 	const q = `#\\3${id.slice(0, 1)} ${id.slice(1)} > .buttons`;
@@ -103,10 +90,5 @@ window.addEventListener('load', function(){
 	const rtButtons = document.getElementsByClassName('rt_button');
 	for(let i = 0; i < rtButtons.length; i++) {
 		rtButtons[i].addEventListener('click', retweet, false);
-	}
-
-	const imgButtons = document.getElementsByClassName('img_button');
-	for(let i = 0; i < imgButtons.length; i++) {
-		imgButtons[i].addEventListener('click', showImage, false);
 	}
 }, false);

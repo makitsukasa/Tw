@@ -34,11 +34,11 @@
 					<button class='button rt_button' disabled><s>rt</s></button>
 				{% endif %}
 				{% for url in status['media'] %}
-					<!--<a href="/show_image/{{ status['id'] }}/{{ loop.index0 }}" target='_blank'
-						class='button img_button'>
-						img
-					</a>-->
-					<button class='button img_button' value="{{ loop.index0 }}">img</button>
+					<form action='/show_image' method='post' target='_blank'>
+						<input type='hidden' name='id' value="{{ status['id'] }}">
+						<input type='hidden' name='index' value="{{ loop.index0 }}">
+						<input type='submit' value='img' class='button img_button'>
+					</form>
 				{% endfor %}
 			</p>
 		</div>

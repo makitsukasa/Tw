@@ -68,9 +68,10 @@ def app_route_retweet():
 def app_route_show_image(id):
 	id = request.json['id']
 	index = request.json['index'] or 0
-	if not id or not show_image(id, index):
+	result = show_image(id, index)
+	if not id or not result:
 		return '/show_image server error', 500
-	return '/show_image post succeeded'
+	return '/show_image get succeeded'
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
