@@ -5,8 +5,9 @@ function createFavorite(e) {
 	const request = new XMLHttpRequest();
 	request.onload = () => {reactFav(id)};
 	request.onerror = () => {reactFav(id, false)};
-	request.open('post', '/create_favorite/' + id, true);
-	request.send();
+	request.open('post', '/create_favorite', true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(JSON.stringify({'id': id}));
 	return false;
 }
 
@@ -16,8 +17,9 @@ function destroyFavorite(e) {
 	const request = new XMLHttpRequest();
 	request.onload = () => {reactUnfav(id)};
 	request.onerror = () => {reactUnfav(id, false)};
-	request.open('post', '/destroy_favorite/' + id, true);
-	request.send();
+	request.open('post', '/destroy_favorite', true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(JSON.stringify({'id': id}));
 	return false;
 }
 
@@ -27,8 +29,22 @@ function retweet(e) {
 	const request = new XMLHttpRequest();
 	request.onload = () => {reactRt(id)};
 	request.onerror = () => {reactRt(id, false)};
-	request.open('post', '/retweet/' + id, true);
-	request.send();
+	request.open('post', '/retweet', true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(JSON.stringify({'id': id}));
+	return false;
+}
+
+function showImage(e) {
+	e.preventDefault();
+	const id = e.target.parentElement.parentElement.id;
+	const index = e.target.value;
+	const request = new XMLHttpRequest();
+	request.onload = () => {};
+	request.onerror = () => {};
+	request.open('post', '/show_image', true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(JSON.stringify({'id': id, 'index': index}));
 	return false;
 }
 
@@ -81,5 +97,10 @@ window.addEventListener('load', function(){
 	const rtButtons = document.getElementsByClassName('rt_button');
 	for(let i = 0; i < rtButtons.length; i++) {
 		rtButtons[i].addEventListener('click', retweet, false);
+	}
+
+	const imgButtons = document.getElementsByClassName('img_button');
+	for(let i = 0; i < imgButtons.length; i++) {
+		imgButtons[i].addEventListener('click', showImage, false);
 	}
 }, false);

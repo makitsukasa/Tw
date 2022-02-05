@@ -35,26 +35,38 @@ def app_route_update_status():
 		return '/update_status server error', 500
 	return '/update_status post succeeded'
 
-@app.route('/create_favorite/<string:id>', methods=['POST'])
+@app.route('/create_favorite', methods=['POST'])
 @auth.login_required
-def app_route_create_favorite(id):
-	if not create_favorite(id):
+def app_route_create_favorite():
+	id = request.form.get('id')
+	if not id or not create_favorite(id):
 		return '/create_favorite server error', 500
 	return '/create_favorite post succeeded'
 
-@app.route('/destroy_favorite/<string:id>', methods=['POST'])
+@app.route('/destroy_favorite', methods=['POST'])
 @auth.login_required
-def app_route_destroy_favorite(id):
-	if not destroy_favorite(id):
+def app_route_destroy_favorite():
+	id = request.form.get('id')
+	if not id or not destroy_favorite(id):
 		return '/destroy_favorite server error', 500
 	return '/destroy_favorite post succeeded'
 
-@app.route('/retweet/<string:id>', methods=['POST'])
+@app.route('/retweet', methods=['POST'])
 @auth.login_required
-def app_route_retweet(id):
-	if not retweet(id):
+def app_route_retweet():
+	id = request.form.get('id')
+	if not id or not retweet(id):
 		return '/retweet server error', 500
 	return '/retweet post succeeded'
+
+@app.route('/show_image', methods=['GET'])
+@auth.login_required
+def app_route_show_image(id):
+	id = request.form.get('id')
+	index = request.form.get('id') or 0
+	if not id or not show_image(id, index):
+		return '/show_image server error', 500
+	return '/show_image post succeeded'
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():

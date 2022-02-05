@@ -34,7 +34,11 @@
 					<button class='button rt_button' disabled><s>rt</s></button>
 				{% endif %}
 				{% for url in status['media'] %}
-					<a href="{{ url }}" target='_blank' class='button img_button'>img</a>
+					<!--<a href="/show_image/{{ status['id'] }}/{{ loop.index0 }}" target='_blank'
+						class='button img_button'>
+						img
+					</a>-->
+					<button class='button img_button' value="{{ loop.index0 }}">img</button>
 				{% endfor %}
 			</p>
 		</div>
