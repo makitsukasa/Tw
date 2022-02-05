@@ -7,16 +7,18 @@
 <body>
 	{% for status in home_timeline %}
 		<div class='status' id="{{ status['id'] }}">
-			<p class='info'>
+			<div class='info'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 				{% if status['is_rt'] %}
 					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 				{% endif %}
-			</p>
-			<p class='text'>
+			</div>
+			<br>
+			<div class='text'>
 				{{ status['text'] }}
-			</p>
-			<p class='buttons'>
+			</div>
+			<br>
+			<div class='buttons'>
 				{% if status['in_reply_to'] %}
 					<a tabindex='-1' class='button indicator'>reply</a>
 				{% endif %}
@@ -40,7 +42,8 @@
 						<input type='submit' value='img' class='button img_button'>
 					</form>
 				{% endfor %}
-			</p>
+			</div>
 		</div>
+		<br>
 	{% endfor %}
 </body>
