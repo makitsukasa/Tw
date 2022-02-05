@@ -64,7 +64,7 @@ def app_route_retweet():
 		return '/retweet server error', 500
 	return '/retweet post succeeded'
 
-@app.route('/show_image', methods=['GET'])
+@app.route('/show_image', methods=['POST'])
 @auth.login_required
 def app_route_show_image(id):
 	id = request.json['id']
