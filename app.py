@@ -38,7 +38,9 @@ def app_route_update_status():
 @app.route('/create_favorite', methods=['POST'])
 @auth.login_required
 def app_route_create_favorite():
+	print('create_favorite')
 	id = request.form.get('id')
+	print(id)
 	if not id or not create_favorite(id):
 		return '/create_favorite server error', 500
 	return '/create_favorite post succeeded'
@@ -46,7 +48,9 @@ def app_route_create_favorite():
 @app.route('/destroy_favorite', methods=['POST'])
 @auth.login_required
 def app_route_destroy_favorite():
+	print('destroy_favorite')
 	id = request.form.get('id')
+	print(id)
 	if not id or not destroy_favorite(id):
 		return '/destroy_favorite server error', 500
 	return '/destroy_favorite post succeeded'
