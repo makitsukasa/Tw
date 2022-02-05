@@ -1,5 +1,6 @@
 import os
 import tweepy
+from imgutil import base64ify
 from util import get_jst_HM, get_jst_YMDHM
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
@@ -66,3 +67,12 @@ def retweet(id):
 		return True
 	except Exception as e:
 		return False
+
+def show_image(id, index):
+	s = tweepy_api.get_status(id, tweet_mode='extended')
+	try:                   # is retweet
+		s = s.retweeted_status
+	except AttributeError: # is not retweet
+		pass
+	img_url = s.extended_entities['media'][index]
+	return base64ify(img_url)
