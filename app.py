@@ -39,7 +39,7 @@ def app_route_update_status():
 @auth.login_required
 def app_route_create_favorite():
 	print('create_favorite')
-	id = request.form.get('id')
+	id = request.json['id']
 	print(id)
 	if not id or not create_favorite(id):
 		return '/create_favorite server error', 500
@@ -49,7 +49,7 @@ def app_route_create_favorite():
 @auth.login_required
 def app_route_destroy_favorite():
 	print('destroy_favorite')
-	id = request.form.get('id')
+	id = request.json['id']
 	print(id)
 	if not id or not destroy_favorite(id):
 		return '/destroy_favorite server error', 500
@@ -58,7 +58,7 @@ def app_route_destroy_favorite():
 @app.route('/retweet', methods=['POST'])
 @auth.login_required
 def app_route_retweet():
-	id = request.form.get('id')
+	id = request.json['id']
 	if not id or not retweet(id):
 		return '/retweet server error', 500
 	return '/retweet post succeeded'
@@ -66,8 +66,8 @@ def app_route_retweet():
 @app.route('/show_image', methods=['GET'])
 @auth.login_required
 def app_route_show_image(id):
-	id = request.form.get('id')
-	index = request.form.get('id') or 0
+	id = request.json['id']
+	index = request.json['index'] or 0
 	if not id or not show_image(id, index):
 		return '/show_image server error', 500
 	return '/show_image post succeeded'
