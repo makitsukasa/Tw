@@ -1,7 +1,8 @@
 import os
 import json
 from datetime import timezone, timedelta
-from tweet import update_status, home_timeline, create_favorite, destroy_favorite, retweet
+from tweet import (update_status, home_timeline,
+	create_favorite, destroy_favorite, retweet, show_image)
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
