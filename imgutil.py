@@ -11,5 +11,7 @@ def base64ify(img_url):
 
 	buffer = BytesIO()
 	img.save(buffer, 'jpeg')
+	if img.mode != "RGB": # http://blog.livedoor.jp/kmiwa_project/archives/1042268915.html
+		img = img.convert("RGB")
 	base64string = base64.b64encode(buffer.getvalue())
 	return 'data:image/jpg;base64,' + base64string.decode('utf-8')
