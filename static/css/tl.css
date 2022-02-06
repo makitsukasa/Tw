@@ -38,6 +38,10 @@
 	visibility: visible;
 }
 
+.status > .buttons > form {
+	display: inline;
+}
+
 /* https://goflb1238.hatenablog.jp/entry/2014/02/11/145531 aタグとbuttonの見た目を揃える */
 /* https://kyoheiomi.com/design/css_button_design CSSで作る汎用性の高いシンプルなボタンデザイン20 */
 .status > .buttons .button {

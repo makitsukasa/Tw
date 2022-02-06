@@ -66,7 +66,7 @@ def app_route_retweet():
 
 @app.route('/show_image', methods=['POST'])
 @auth.login_required
-def app_route_show_image(id):
+def app_route_show_image():
 	id = request.json['id']
 	index = request.json['index'] or 0
 	result = show_image(id, index)
