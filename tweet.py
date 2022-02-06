@@ -68,4 +68,4 @@ def get_image_url(id):
 	except AttributeError: # is not retweet
 		pass
 	media = s.extended_entities['media']
-	return [media[i]['url'] for i in range(len(media))]
+	return [media[i]['media_url'] for i in range(len(media))]
