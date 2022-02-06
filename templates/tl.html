@@ -33,13 +33,12 @@
 				{% else %}
 					<button class='button rt_button' disabled><s>rt</s></button>
 				{% endif %}
-				{% for url in status['media'] %}
-					<form action='/show_image' method='post' target='_blank'>
-						<input type='hidden' name='id' value="{{ status['id'] }}">
-						<input type='hidden' name='index' value="{{ loop.index0 }}">
-						<input type='submit' value='img' class='button img_button'>
-					</form>
-				{% endfor %}
+				{% if status['has_img'] %}
+				<form action='/show_image' method='post' target='_blank'>
+					<input type='hidden' name='id' value="{{ status['id'] }}">
+					<input type='submit' value='img' class='button img_button'>
+				</form>
+				{% endif %}
 			</div>
 		</div>
 	{% endfor %}

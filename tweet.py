@@ -1,6 +1,5 @@
 import os
 import tweepy
-from imgutil import base64ify
 from util import get_jst_HM, get_jst_YMDHM
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
@@ -37,13 +36,7 @@ def home_timeline():
 		statuses[i]['can_fav'] = not s.favorited
 		statuses[i]['can_rt'] = not s.user.protected
 		statuses[i]['in_reply_to'] = s.in_reply_to_status_id_str # id_str or None
-
-		if not 'media' in s.entities: # has no media
-			statuses[i]['media'] = []
-		else:                         # has media
-			statuses[i]['media'] = [None for _ in range(len(s.extended_entities['media']))]
-			for j, media in enumerate(s.extended_entities['media']):
-				statuses[i]['media'][j] = media['media_url']
+		statuses[i]['has_img'] = 'media' in s.entities
 
 	return statuses
 
@@ -68,11 +61,11 @@ def retweet(id):
 	except Exception as e:
 		return False
 
-def show_image(id, index):
+def get_image_url(id):
 	s = tweepy_api.get_status(id, tweet_mode='extended')
 	try:                   # is retweet
 		s = s.retweeted_status
 	except AttributeError: # is not retweet
 		pass
-	img_url = s.extended_entities['media'][index]
-	return base64ify(img_url)
+	media = s.extended_entities['media']
+	return [media[i]['url'] for i in range(len(media))]

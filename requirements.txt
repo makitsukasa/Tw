@@ -4,3 +4,5 @@ Flask==1.1.2
 Flask-HTTPAuth
 flask-talisman
 tweepy
+pillow
+requests

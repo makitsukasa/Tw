@@ -1,8 +1,9 @@
 import os
 import json
 from datetime import timezone, timedelta
+from imgutil import base64ify
 from tweet import (update_status, home_timeline,
-	create_favorite, destroy_favorite, retweet, show_image)
+	create_favorite, destroy_favorite, retweet, get_image_url)
 from flask import Flask, request, render_template
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
@@ -68,11 +69,11 @@ def app_route_retweet():
 @auth.login_required
 def app_route_show_image():
 	id = request.json['id']
-	index = request.json['index'] or 0
-	result = show_image(id, index)
-	if not id or not result:
+	if not id:
 		return '/show_image server error', 500
-	return '/show_image get succeeded'
+	urls = get_image_url(id)
+	base64_images = [base64ify(url) for url in urls]
+	return render_template('img.html', images = base64_images)
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
