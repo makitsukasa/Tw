@@ -68,7 +68,7 @@ def app_route_retweet():
 @app.route('/show_image', methods=['POST'])
 @auth.login_required
 def app_route_show_image():
-	id = request.json['id']
+	id = request.form.get('id')
 	if not id:
 		return '/show_image server error', 500
 	urls = get_image_url(id)
