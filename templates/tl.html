@@ -13,11 +13,9 @@
 					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 				{% endif %}
 			</div>
-			<br>
 			<div class='text'>
 				{{ status['text'] }}
 			</div>
-			<br>
 			<div class='buttons'>
 				{% if status['in_reply_to'] %}
 					<a tabindex='-1' class='button indicator'>reply</a>
@@ -44,6 +42,5 @@
 				{% endfor %}
 			</div>
 		</div>
-		<br>
 	{% endfor %}
 </body>
