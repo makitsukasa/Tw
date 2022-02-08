@@ -11,3 +11,6 @@ def base64ify(img_url):
 	img.save(buffer, 'png')
 	base64string = base64.b64encode(buffer.getvalue())
 	return 'data:image/png;base64,' + base64string.decode('utf-8')
+
+def get_image(img_url):
+	return BytesIO(requests.get(img_url).content).getvalue()

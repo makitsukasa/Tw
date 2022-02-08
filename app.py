@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import timezone, timedelta
-from imgutil import base64ify
+from imgutil import base64ify, get_image
 from tweet import (update_status, home_timeline,
 	create_favorite, destroy_favorite, retweet, get_image_url)
 from flask import Flask, request, render_template, make_response
@@ -66,28 +66,23 @@ def app_route_retweet():
 	return '/retweet post succeeded'
 
 @app.route('/image', methods=['POST'])
-@app.route('/image/<str:id>/<int:index>', methods=['GET'])
+@app.route('/image/<string:id>/<int:index>', methods=['GET'])
 @auth.login_required
-def app_route_image(id=None, index=None):
+def app_route_image(id='', index=0):
 	if not id:
 		id = request.form.get('id')
 		if not id:
 			return '/image server error', 500
-		return render_template('img.html', id=id)
+		count = request.form.get('count') or 4
+		return render_template('img.html', id=id, count=count)
 	try:
 		url = get_image_url(id, index)
-		base64_image = base64ify(url)
-		return base64_image
+		image = get_image(url)
+		response = make_response(image)
+		response.headers.set('Content-Type', request.content_type)
+		return response
 	except IndexError:
 		return '/image server error', 500
-
-@app.route('/show_image', methods=['POST'])
-@auth.login_required
-def app_route_show_image():
-	id = request.form.get('id')
-	if not id:
-		return '/show_image server error', 500
-	return render_template('img.html', id=id)
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
