@@ -4,7 +4,7 @@ from datetime import timezone, timedelta
 from imgutil import base64ify
 from tweet import (update_status, home_timeline,
 	create_favorite, destroy_favorite, retweet, get_image_url)
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, make_responce
 from flask_httpauth import HTTPDigestAuth
 from flask_talisman import Talisman
 
@@ -73,7 +73,7 @@ def app_route_show_image():
 		return '/show_image server error', 500
 	urls = get_image_url(id)
 	base64_images = [base64ify(url) for url in urls]
-	resp = make_response(render_template('img.html', images = base64_images))
+	resp = make_responce(render_template('img.html', images = base64_images))
 	resp.headers.set('Content-Security-Policy', "img-src 'self' data:")
 	return resp
 
