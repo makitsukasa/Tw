@@ -65,16 +65,15 @@ def app_route_retweet():
 		return '/retweet server error', 500
 	return '/retweet post succeeded'
 
-@app.route('/image', methods=['POST'])
+@app.route('/image/<id>/<index>', methods=['GET'])
 @auth.login_required
-def app_route_image():
-	id = request.form.get('id')
-	index = request.form.get('index')
-	if not id:
-		return '/image server error', 500
-	url = get_image_url(id, index)
-	base64_image = base64ify(url)
-	return base64_image
+def app_route_image(id, index):
+	try:
+		url = get_image_url(id, index)
+		base64_image = base64ify(url)
+		return base64_image
+	except:
+		return "/image server error"
 
 @app.route('/show_image', methods=['POST'])
 @auth.login_required
