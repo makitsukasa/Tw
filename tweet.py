@@ -61,11 +61,14 @@ def retweet(id):
 	except Exception as e:
 		return False
 
-def get_image_url(id):
+def get_image_url(id, index=None):
 	s = tweepy_api.get_status(id, tweet_mode='extended')
 	try:                   # is retweet
 		s = s.retweeted_status
 	except AttributeError: # is not retweet
 		pass
 	media = s.extended_entities['media']
-	return [media[i]['media_url'] for i in range(len(media))]
+	if index is None:
+		return [media[i]['media_url'] for i in range(len(media))]
+	else:
+		return media[index]['media_url']
