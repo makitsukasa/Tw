@@ -72,7 +72,7 @@ def app_route_image(id, index):
 		url = get_image_url(id, index)
 		base64_image = base64ify(url)
 		return base64_image
-	except:
+	except IndexError:
 		return "/image server error"
 
 @app.route('/show_image', methods=['POST'])
