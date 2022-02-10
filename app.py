@@ -1,6 +1,5 @@
 import os
 import json
-from datetime import timezone, timedelta
 from imgutil import get_image
 from tweet import (update_status, home_timeline,
 	create_favorite, destroy_favorite, retweet, get_image_url)
@@ -28,6 +27,24 @@ def app_route_tw():
 @auth.login_required
 def app_route_tl():
 	return render_template('tl.html', home_timeline = home_timeline())
+
+@app.route('/img', methods=['POST'])
+@app.route('/img/<string:id>/<int:index>', methods=['GET'])
+@auth.login_required
+def app_route_image(id='', index=0):
+	if not id:
+		id = request.form.get('id')
+		if not id:
+			return '/img server error', 500
+		count = request.form.get('count') or 4
+		return render_template('img.html', id=id, count=count)
+	try:
+		url = get_image_url(id, index)
+		response = make_response(get_image(url))
+		response.headers.set('Content-Type', request.content_type)
+		return response
+	except IndexError:
+		return '/img server error', 500
 
 @app.route('/update_status', methods=['POST'])
 @auth.login_required
@@ -64,25 +81,6 @@ def app_route_retweet():
 	if not id or not retweet(id):
 		return '/retweet server error', 500
 	return '/retweet post succeeded'
-
-@app.route('/image', methods=['POST'])
-@app.route('/image/<string:id>/<int:index>', methods=['GET'])
-@auth.login_required
-def app_route_image(id='', index=0):
-	if not id:
-		id = request.form.get('id')
-		if not id:
-			return '/image server error', 500
-		count = request.form.get('count') or 4
-		return render_template('img.html', id=id, count=count)
-	try:
-		url = get_image_url(id, index)
-		image = get_image(url)
-		response = make_response(image)
-		response.headers.set('Content-Type', request.content_type)
-		return response
-	except IndexError:
-		return '/image server error', 500
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():

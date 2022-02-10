@@ -34,7 +34,7 @@
 					<button class='button rt_button' disabled><s>rt</s></button>
 				{% endif %}
 				{% if status['has_img'] %}
-				<form action='/image' method='post' target='_blank'>
+				<form action='/img' method='post' target='_blank'>
 					<input type='hidden' name='id' value="{{ status['id'] }}">
 					<input type='submit' value='img' class='button img_button'>
 				</form>
