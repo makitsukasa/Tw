@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import timezone, timedelta
-from imgutil import base64ify, get_image
+from imgutil import get_image
 from tweet import (update_status, home_timeline,
 	create_favorite, destroy_favorite, retweet, get_image_url)
 from flask import Flask, request, render_template, make_response
