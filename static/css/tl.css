@@ -4,6 +4,9 @@
 .status {
 	width: auto;
 	padding: 0.3em;
+
+	filter: grayscale(92%);
+	-webkit-filter: grayscale(92%);
 }
 
 .status:hover {
