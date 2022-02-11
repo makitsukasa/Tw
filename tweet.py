@@ -1,6 +1,6 @@
 import os
 import tweepy
-from util import get_jst_HM, get_jst_YMDHM
+from dateutil import get_datetime_str
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
 CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = TWITTER_KEYS.split(';')
@@ -11,14 +11,14 @@ tweepy_api = tweepy.API(AUTH)
 def reformat_status(raw):
 	formatted = {}
 	formatted['id'] = raw.id_str
-	formatted['created_at'] = get_jst_HM(raw.created_at)
+	formatted['created_at'] = get_datetime_str(raw.created_at)
 	formatted['name'] = raw.user.name
 	formatted['screen_name'] = raw.user.screen_name
 
 	try:                          # is retweet
 		raw = raw.retweeted_status
 		formatted['is_rt'] = True
-		formatted['rt_created_at'] = get_jst_YMDHM(raw.created_at)
+		formatted['rt_created_at'] = get_datetime_str(raw.created_at)
 		formatted['rt_name'] = raw.user.name
 		formatted['rt_screen_name'] = raw.user.screen_name
 	except AttributeError:        # is not retweet

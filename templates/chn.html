@@ -9,9 +9,6 @@
 		<div class='status' id="{{ status['id'] }}">
 			<div class='info'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
-				{% if status['is_rt'] %}
-					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
-				{% endif %}
 			</div>
 			<div class='text'>
 				{{ status['text'] }}
