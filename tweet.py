@@ -15,13 +15,13 @@ def reformat_status(raw):
 	formatted['name'] = raw.user.name
 	formatted['screen_name'] = raw.user.screen_name
 
-	try:                          # is retweet
+	if hasattr(raw, "retweeted_status"): # is retweet
 		raw = raw.retweeted_status
 		formatted['is_rt'] = True
 		formatted['rt_created_at'] = get_datetime_str(raw.created_at)
 		formatted['rt_name'] = raw.user.name
 		formatted['rt_screen_name'] = raw.user.screen_name
-	except AttributeError:        # is not retweet
+	else:
 		formatted['is_rt'] = False
 
 	formatted['text'] = raw.full_text
@@ -49,10 +49,8 @@ def get_reply_chain(id):
 	statuses = []
 	while id:
 		s = tweepy_api.get_status(id, tweet_mode='extended')
-		try:                   # is retweet
+		if hasattr(s, "retweeted_status"):
 			s = s.retweeted_status
-		except AttributeError: # is not retweet
-			pass
 		statuses.append(reformat_status(s))
 		id = s.in_reply_to_status_id_str
 	return statuses
@@ -61,29 +59,27 @@ def create_favorite(id):
 	try:
 		tweepy_api.create_favorite(id)
 		return True
-	except Exception as e:
+	except Exception:
 		return False
 
 def destroy_favorite(id):
 	try:
 		tweepy_api.destroy_favorite(id)
 		return True
-	except Exception as e:
+	except Exception:
 		return False
 
 def retweet(id):
 	try:
 		tweepy_api.retweet(id)
 		return True
-	except Exception as e:
+	except Exception:
 		return False
 
 def get_image_url(id, index=None):
 	s = tweepy_api.get_status(id, tweet_mode='extended')
-	try:                   # is retweet
+	if hasattr(s, "retweeted_status"):
 		s = s.retweeted_status
-	except AttributeError: # is not retweet
-		pass
 	media = s.extended_entities['media']
 	if index is None:
 		return [media[i]['media_url'] for i in range(len(media))]
