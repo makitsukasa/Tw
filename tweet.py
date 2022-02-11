@@ -1,4 +1,5 @@
 import os
+import re
 import tweepy
 from dateutil import get_datetime_str
 
@@ -14,8 +15,9 @@ def reformat_status(raw):
 	formatted['created_at'] = get_datetime_str(raw.created_at)
 	formatted['name'] = raw.user.name
 	formatted['screen_name'] = raw.user.screen_name
+	formatted['has_no_reply'] = False
 
-	if hasattr(raw, "retweeted_status"): # is retweet
+	if hasattr(raw, 'retweeted_status'): # is retweet
 		raw = raw.retweeted_status
 		formatted['is_rt'] = True
 		formatted['rt_created_at'] = get_datetime_str(raw.created_at)
@@ -45,14 +47,63 @@ def get_timeline():
 		statuses[i] = reformat_status(s)
 	return statuses
 
-def get_reply_chain(id):
+def get_reply_upstream(id):
 	statuses = []
-	while id:
+	for _ in range(20):
+		if not id:
+			break
 		s = tweepy_api.get_status(id, tweet_mode='extended')
-		if hasattr(s, "retweeted_status"):
+		if hasattr(s, 'retweeted_status'):
 			s = s.retweeted_status
 		statuses.append(reformat_status(s))
 		id = s.in_reply_to_status_id_str
+	return statuses
+
+def get_reply_downstream(id):
+	s = tweepy_api.get_status(id, tweet_mode='extended')
+	if hasattr(s, 'retweeted_status'):
+		s = s.retweeted_status
+		id = s.id_str
+	screen_name = s.user.screen_name
+	statuses = [reformat_status(s)]
+	for _ in range(20):
+		replies = []
+		search_results = tweepy.Cursor(
+			tweepy_api.search_tweets,
+			since_id = id,
+			q = 'to:{}'.format(screen_name),
+			tweet_mode = 'extended').items()
+		print('to:' + screen_name, id)
+		while True:
+			try:
+				r = search_results.next()
+				print(r.id, '->', r.in_reply_to_status_id_str)
+				if r.in_reply_to_status_id_str == id:
+					print('reply of tweet:{}'.format(r.full_text))
+					replies.append(r)
+			except tweepy.TooManyRequests as e:
+				print('Twitter api rate limit reached'.format(e))
+				continue
+			except tweepy.HTTPException as e:
+				print('Tweepy error occured:{}'.format(e))
+				break
+			except StopIteration:
+				break
+			except Exception as e:
+				print('Failed while fetching replies {}'.format(e))
+				break
+
+		if len(replies) == 0:
+			statuses[0]['has_no_reply'] = True
+			break
+		elif len(replies) > 1:
+			for r in replies:
+				statuses.insert(0, reformat_status(r))
+			break
+		else:
+			statuses.append(reformat_status(replies[0]))
+			id = replies[0].id
+			screen_name = replies[0].user.screen_name
 	return statuses
 
 def create_favorite(id):
@@ -78,7 +129,7 @@ def retweet(id):
 
 def get_image_url(id, index=None):
 	s = tweepy_api.get_status(id, tweet_mode='extended')
-	if hasattr(s, "retweeted_status"):
+	if hasattr(s, 'retweeted_status'):
 		s = s.retweeted_status
 	media = s.extended_entities['media']
 	if index is None:

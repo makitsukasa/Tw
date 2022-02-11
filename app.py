@@ -1,7 +1,7 @@
 import os
 import json
 from imgutil import get_image
-from tweet import (update_status, get_timeline, get_reply_chain,
+from tweet import (update_status, get_timeline, get_reply_upstream, get_reply_downstream,
 	create_favorite, destroy_favorite, retweet, get_image_url)
 from flask import Flask, request, render_template, make_response
 from flask_httpauth import HTTPDigestAuth
@@ -26,15 +26,23 @@ def app_route_tw():
 @app.route('/tl')
 @auth.login_required
 def app_route_tl():
-	return render_template('tl.html', timeline = get_timeline())
+	return render_template('statuses.html', statuses = get_timeline())
 
-@app.route('/chn', methods=['POST'])
+@app.route('/up', methods=['POST'])
 @auth.login_required
-def app_route_chn():
+def app_route_up():
 	id = request.form.get('id')
 	if not id:
-		return '/chn server error', 500
-	return render_template('chn.html', statuses = get_reply_chain(id))
+		return '/up server error', 500
+	return render_template('statuses.html', statuses = get_reply_upstream(id))
+
+@app.route('/dn', methods=['POST'])
+@auth.login_required
+def app_route_dn():
+	id = request.form.get('id')
+	if not id:
+		return '/dn server error', 500
+	return render_template('statuses.html', statuses = get_reply_downstream(id))
 
 @app.route('/img', methods=['POST'])
 @app.route('/img/<string:id>/<int:index>', methods=['GET'])
