@@ -50,6 +50,10 @@ def get_reply_chain(id):
 	while id:
 		print(id, flush=True)
 		s = tweepy_api.get_status(id, tweet_mode='extended')
+		try:                   # is retweet
+			s = s.retweeted_status
+		except AttributeError: # is not retweet
+			pass
 		statuses.append(reformat_status(s))
 		id = s.in_reply_to_status_id_str
 	return statuses

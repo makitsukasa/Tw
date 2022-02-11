@@ -63,7 +63,7 @@
 	cursor: pointer;
 
 	position: relative;
-	width: 5em;
+	min-width: 5em;
 	border: 0;
 	padding: 0.2em;
 	text-align: center;
@@ -90,4 +90,8 @@
 	background: #FFF;
 	border: 1px solid #F2F2F2;
 	cursor: default;
+}
+
+.status > .buttons .indicator:disabled {
+	text-decoration: line-through;
 }

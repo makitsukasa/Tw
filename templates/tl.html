@@ -19,12 +19,13 @@
 			</div>
 			<div class='buttons'>
 				{% if status['in_reply_to'] %}
-					<a tabindex='-1' class='button indicator'>reply</a>
-				{% endif %}
 				<form action='/chn' method='post' target='_blank'>
 					<input type='hidden' name='id' value="{{ status['id'] }}">
-					<input type='submit' value='more' class='button search_reply_button'>
+					<input type='submit' value='reply' class='button show_reply_chain_button'>
 				</form>
+				{% else %}
+					<button class='button indicator' disabled>reply</button>
+				{% endif %}
 				{% if status['can_fav'] %}
 					<button class='button fav_button'>fav</button>
 					<button class='button unfav_button' disabled>unfav</button>
