@@ -101,7 +101,7 @@ def get_reply_downstream(id):
 				statuses.insert(0, reformat_status(r))
 			break
 		else:
-			statuses.append(reformat_status(replies[0]))
+			statuses.insert(0, reformat_status(replies[0]))
 			id = replies[0].id
 			screen_name = replies[0].user.screen_name
 	return statuses
