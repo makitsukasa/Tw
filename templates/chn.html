@@ -1,0 +1,45 @@
+<!doctype html>
+<head>
+	<title>dtl</title>
+	<link rel='stylesheet' href='static/css/tl.css'>
+	<script src='static/js/tl.js'></script>
+</head>
+<body>
+	{% for status in statuses %}
+		<div class='status' id="{{ status['id'] }}">
+			<div class='info'>
+				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
+				{% if status['is_rt'] %}
+					Retweeted: {{ status['rt_created_at'] }} {{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
+				{% endif %}
+			</div>
+			<div class='text'>
+				{{ status['text'] }}
+			</div>
+			<div class='buttons'>
+				<form action='/img' method='post' target='_blank'>
+					<input type='hidden' name='id' value="{{ status['id'] }}">
+					<input type='submit' value='more' class='button search_reply_button'>
+				</form>
+				{% if status['can_fav'] %}
+					<button class='button fav_button'>fav</button>
+					<button class='button unfav_button' disabled>unfav</button>
+				{% else %}
+					<button class='button fav_button' disabled>fav</button>
+					<button class='button unfav_button'>unfav</button>
+				{% endif %}
+				{% if status['can_rt'] %}
+					<button class='button rt_button'>rt</button>
+				{% else %}
+					<button class='button rt_button' disabled><s>rt</s></button>
+				{% endif %}
+				{% if status['has_img'] %}
+				<form action='/img' method='post' target='_blank'>
+					<input type='hidden' name='id' value="{{ status['id'] }}">
+					<input type='submit' value='img' class='button img_button'>
+				</form>
+				{% endif %}
+			</div>
+		</div>
+	{% endfor %}
+</body>

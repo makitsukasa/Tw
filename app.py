@@ -1,7 +1,7 @@
 import os
 import json
 from imgutil import get_image
-from tweet import (update_status, home_timeline,
+from tweet import (update_status, get_timeline, get_reply_chain,
 	create_favorite, destroy_favorite, retweet, get_image_url)
 from flask import Flask, request, render_template, make_response
 from flask_httpauth import HTTPDigestAuth
@@ -26,7 +26,15 @@ def app_route_tw():
 @app.route('/tl')
 @auth.login_required
 def app_route_tl():
-	return render_template('tl.html', home_timeline = home_timeline())
+	return render_template('tl.html', timeline = get_timeline())
+
+@app.route('/chn', methods=['POST'])
+@auth.login_required
+def app_route_chn():
+	id = request.form.get('id')
+	if not id:
+		return '/chn server error', 500
+	return render_template('chn.html', statuses = get_reply_chain(id))
 
 @app.route('/img', methods=['POST'])
 @app.route('/img/<string:id>/<int:index>', methods=['GET'])
