@@ -48,7 +48,6 @@ def get_timeline():
 def get_reply_chain(id):
 	statuses = []
 	while id:
-		print(id, flush=True)
 		s = tweepy_api.get_status(id, tweet_mode='extended')
 		try:                   # is retweet
 			s = s.retweeted_status
@@ -90,6 +89,5 @@ def get_image_url(id, index=None):
 		return [media[i]['media_url'] for i in range(len(media))]
 	else:
 		if index < 0 or index >= len(media):
-			print(f'index:{index} >= len:{len(media)}')
 			raise IndexError(index)
 		return media[index]['media_url']
