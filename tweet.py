@@ -28,7 +28,7 @@ def reformat_status(raw):
 	else:
 		formatted['is_rt'] = False
 
-	formatted['text'] = json.dumps(raw)
+	formatted['text'] = raw.full_text + "<br>" + ("Q" if raw.is_quote_status else "-")
 	formatted['can_fav'] = not raw.favorited
 	formatted['can_rt'] = not raw.user.protected
 	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
@@ -58,7 +58,7 @@ def update_status(body=None):
 	return True
 
 def get_timeline():
-	raw_statuses = tweepy_api.home_timeline(count=10, tweet_mode='extended')
+	raw_statuses = tweepy_api.home_timeline(count=100, tweet_mode='extended')
 	statuses = [{} for _ in range(len(raw_statuses))]
 	for i, s in enumerate(raw_statuses):
 		statuses[i] = reformat_status(s)
