@@ -32,6 +32,21 @@ def reformat_status(raw):
 	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
 	formatted['has_img'] = 'media' in raw.entities
 
+	if raw.is_quote_status: # is quote
+		quote = raw.quoted_status
+		formatted['has_qt'] = True
+		formatted['qt_id'] = quote.id_str
+		formatted['qt_created_at'] = get_datetime_str(quote.created_at)
+		formatted['qt_name'] = quote.user.name
+		formatted['qt_screen_name'] = quote.user.screen_name
+		formatted['qt_text'] = quote.full_text
+		formatted['qt_can_fav'] = not quote.favorited
+		formatted['qt_can_rt'] = not quote.user.protected
+		formatted['qt_in_reply_to'] = quote.in_reply_to_status_id_str # id_str or None
+		formatted['qt_has_img'] = 'media' in quote.entities
+	else:
+		formatted['has_qt'] = False
+
 	return formatted
 
 def update_status(body=None):
