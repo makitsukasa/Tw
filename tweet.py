@@ -3,8 +3,6 @@ import re
 import tweepy
 from dateutil import get_datetime_str
 
-import json
-
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
 CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = TWITTER_KEYS.split(';')
 AUTH = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -17,7 +15,6 @@ def reformat_status(raw):
 	formatted['created_at'] = get_datetime_str(raw.created_at)
 	formatted['name'] = raw.user.name
 	formatted['screen_name'] = raw.user.screen_name
-	formatted['has_no_reply'] = False
 
 	if hasattr(raw, 'retweeted_status'): # is retweet
 		raw = raw.retweeted_status
@@ -28,11 +25,12 @@ def reformat_status(raw):
 	else:
 		formatted['is_rt'] = False
 
-	formatted['text'] = raw.full_text
+	formatted['text'] = replace_shorten_urls(raw.full_text, raw.urls)
 	formatted['can_fav'] = not raw.favorited
 	formatted['can_rt'] = not raw.user.protected
 	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
 	formatted['has_img'] = 'media' in raw.entities
+	formatted['has_no_reply'] = False # enalble get_reply button
 
 	if raw.is_quote_status: # is quote
 		quote = raw.quoted_status
@@ -41,15 +39,21 @@ def reformat_status(raw):
 		formatted['qt_created_at'] = get_datetime_str(quote.created_at)
 		formatted['qt_name'] = quote.user.name
 		formatted['qt_screen_name'] = quote.user.screen_name
-		formatted['qt_text'] = quote.full_text
+		formatted['qt_text'] = replace_shorten_urls(quote.full_text, quote.urls)
 		formatted['qt_can_fav'] = not quote.favorited
 		formatted['qt_can_rt'] = not quote.user.protected
 		formatted['qt_in_reply_to'] = quote.in_reply_to_status_id_str # id_str or None
 		formatted['qt_has_img'] = 'media' in quote.entities
+		formatted['qt_has_no_reply'] = False # enalble get_reply button
 	else:
 		formatted['has_qt'] = False
 
 	return formatted
+
+def replace_shorten_urls(text, urls):
+	for url in urls:
+		text = text.replace(url['display_url'], url['expanded_url'])
+	return text
 
 def update_status(body=None):
 	if not body:
