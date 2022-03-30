@@ -10,8 +10,8 @@
 			<div class='info'>
 				{{ status['created_at'] }} {{ status['name'] }} @{{ status['screen_name'] }}
 				{% if status['is_rt'] %}
-				Retweeted: {{ status['rt_created_at'] }}
-				{{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
+					Retweeted: {{ status['rt_created_at'] }}
+					{{ status['rt_name'] }} @{{ status['rt_screen_name'] }}
 				{% endif %}
 			</div>
 			<div class='text'>
@@ -19,10 +19,10 @@
 			</div>
 			<div class='buttons'>
 				{% if status['in_reply_to'] %}
-				<form action='/up' method='post' target='_blank'>
-					<input type='hidden' name='id' value="{{ status['id'] }}">
-					<input type='submit' value='upstream' class='button'>
-				</form>
+					<form action='/up' method='post' target='_blank'>
+						<input type='hidden' name='id' value="{{ status['id'] }}">
+						<input type='submit' value='upstream' class='button'>
+					</form>
 				{% else %}
 					<button class='button indicator' disabled>upstream</button>
 				{% endif %}
@@ -47,14 +47,13 @@
 					<button class='button rt_button' disabled><s>rt</s></button>
 				{% endif %}
 				{% if status['has_img'] %}
-				<form action='/img' method='post' target='_blank'>
-					<input type='hidden' name='id' value="{{ status['id'] }}">
-					<input type='submit' value='img' class='button'>
-				</form>
+					<form action='/img' method='post' target='_blank'>
+						<input type='hidden' name='id' value="{{ status['id'] }}">
+						<input type='submit' value='img' class='button'>
+					</form>
 				{% endif %}
 			</div>
-
-			{% if status['has_quote'] %}
+			{% if status['has_qt'] %}
 				<div class='status' id="{{ status['qt_id'] }}">
 					<div class='info'>
 						Quoted: {{ status['qt_created_at'] }}
@@ -65,10 +64,10 @@
 					</div>
 					<div class='buttons'>
 						{% if status['qt_in_reply_to'] %}
-						<form action='/up' method='post' target='_blank'>
-							<input type='hidden' name='id' value="{{ status['qt_id'] }}">
-							<input type='submit' value='upstream' class='button'>
-						</form>
+							<form action='/up' method='post' target='_blank'>
+								<input type='hidden' name='id' value="{{ status['qt_id'] }}">
+								<input type='submit' value='upstream' class='button'>
+							</form>
 						{% else %}
 							<button class='button indicator' disabled>upstream</button>
 						{% endif %}
@@ -93,15 +92,14 @@
 							<button class='button rt_button' disabled><s>rt</s></button>
 						{% endif %}
 						{% if status['qt_has_img'] %}
-						<form action='/img' method='post' target='_blank'>
-							<input type='hidden' name='id' value="{{ status['qt_id'] }}">
-							<input type='submit' value='img' class='button'>
-						</form>
+							<form action='/img' method='post' target='_blank'>
+								<input type='hidden' name='id' value="{{ status['qt_id'] }}">
+								<input type='submit' value='img' class='button'>
+							</form>
 						{% endif %}
 					</div>
 				</div>
 			{% endif %}
-
 		</div>
 	{% endfor %}
 </body>
