@@ -1,8 +1,10 @@
 azure==4.0.0
 azure-appconfiguration
+Jinja2==3.0.3
+itsdangerous==2.0.1
 Flask==1.1.2
 Flask-HTTPAuth
-flask-talisman
+Flask-Talisman
 tweepy
 pillow
 requests
