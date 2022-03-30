@@ -25,7 +25,10 @@ def reformat_status(raw):
 	else:
 		formatted['is_rt'] = False
 
-	formatted['text'] = replace_shorten_urls(raw.full_text, raw.urls)
+	if hasattr(raw, 'urls'):
+		formatted['text'] = replace_shorten_urls(raw.full_text, raw.urls)
+	else:
+		formatted['text'] = raw.full_text
 	formatted['can_fav'] = not raw.favorited
 	formatted['can_rt'] = not raw.user.protected
 	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
@@ -39,7 +42,10 @@ def reformat_status(raw):
 		formatted['qt_created_at'] = get_datetime_str(quote.created_at)
 		formatted['qt_name'] = quote.user.name
 		formatted['qt_screen_name'] = quote.user.screen_name
-		formatted['qt_text'] = replace_shorten_urls(quote.full_text, quote.urls)
+		if hasattr(quote, 'urls'):
+			formatted['qt_text'] = replace_shorten_urls(quote.full_text, quote.urls)
+		else:
+			formatted['qt_text'] = quote.full_text
 		formatted['qt_can_fav'] = not quote.favorited
 		formatted['qt_can_rt'] = not quote.user.protected
 		formatted['qt_in_reply_to'] = quote.in_reply_to_status_id_str # id_str or None
