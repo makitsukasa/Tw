@@ -28,7 +28,7 @@ def reformat_status(raw):
 	else:
 		formatted['is_rt'] = False
 
-	formatted['text'] = raw.full_text + "<br>" + ("Q" if raw.is_quote_status else "-")
+	formatted['text'] = raw.full_text
 	formatted['can_fav'] = not raw.favorited
 	formatted['can_rt'] = not raw.user.protected
 	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
