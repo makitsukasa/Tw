@@ -6,10 +6,14 @@
 			inputElem = document.getElementById("body1");
 
 			inputElem.onkeydown = function(e){
-				if (this.value && event.ctrlKey && e.keyCode === 13) {
-					// フォームを送信
+				// Enter以外のkeyCodeなら素通り
+				if (e.keyCode !== 13) return true;
+				// Enterのとき、フォームが空じゃない かつ ctrlが押されている ならフォームを送信
+				if ((this.value !== "") && e.ctrlKey) {
 					document.getElementById("form1").submit();
 				}
+				// 上記以外のEnterは無視
+				return false;
 			};
 
 			inputElem.value = "";
