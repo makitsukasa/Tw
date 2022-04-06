@@ -58,7 +58,7 @@ def reformat_status(raw):
 
 def replace_shorten_urls(text, urls):
 	for url in urls:
-		text = text.replace(url['display_url'], url['expanded_url'])
+		text = text.replace(url['media_url'], url['display_url'])
 	return text
 
 def update_status(body=None):
