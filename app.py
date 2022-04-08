@@ -96,7 +96,7 @@ def app_route_retweet():
 
 @app.route('/receive', methods=['GET', 'POST'])
 def app_route_receive():
-	return 'HRADER<br>' + str(request.headers) + '<br><br>' +\
+	return 'HEADER<br>' + str(request.headers) + '<br><br>' +\
 		'DATA<br>' + request.get_data(as_text=True)
 
 @auth.get_password
