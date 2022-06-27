@@ -26,3 +26,6 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+key.py
+key.txt

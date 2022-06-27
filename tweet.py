@@ -1,13 +1,17 @@
+from curses import raw
 import os
 import re
 import tweepy
+from pprint import pprint
 from dateutil import get_datetime_str
 
 TWITTER_KEYS = os.getenv('CUSTOMCONNSTR_TWITTER_KEYS')
 CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = TWITTER_KEYS.split(';')
-AUTH = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-AUTH.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-tweepy_api = tweepy.API(AUTH)
+client = tweepy.Client(
+	consumer_key = CONSUMER_KEY,
+	consumer_secret = CONSUMER_SECRET,
+	access_token = ACCESS_TOKEN,
+	access_token_secret = ACCESS_TOKEN_SECRET)
 
 def reformat_status(raw):
 	formatted = {}
@@ -58,17 +62,18 @@ def reformat_status(raw):
 
 def replace_shorten_urls(text, urls):
 	for url in urls:
-		text = text.replace(url['media_url'], url['display_url'])
+		text = text.replace(url['display_url'], url['expanded_url'])
 	return text
 
 def update_status(body=None):
 	if not body:
 		return False
-	tweepy_api.update_status(body)
+	client.create_tweet(body)
 	return True
 
 def get_timeline():
-	raw_statuses = tweepy_api.home_timeline(count=100, tweet_mode='extended')
+	raw_statuses = client.get_home_timeline(max_results=100)
+	pprint(raw_statuses)
 	statuses = [{} for _ in range(len(raw_statuses))]
 	for i, s in enumerate(raw_statuses):
 		statuses[i] = reformat_status(s)
@@ -79,7 +84,7 @@ def get_reply_upstream(id):
 	for _ in range(20):
 		if not id:
 			break
-		s = tweepy_api.get_status(id, tweet_mode='extended')
+		s = client.get_status(id, tweet_mode='extended')
 		if hasattr(s, 'retweeted_status'):
 			s = s.retweeted_status
 		statuses.append(reformat_status(s))
@@ -87,7 +92,7 @@ def get_reply_upstream(id):
 	return statuses
 
 def get_reply_downstream(id):
-	s = tweepy_api.get_status(id, tweet_mode='extended')
+	s = client.get_status(id, tweet_mode='extended')
 	if hasattr(s, 'retweeted_status'):
 		s = s.retweeted_status
 		id = s.id_str
@@ -96,7 +101,7 @@ def get_reply_downstream(id):
 	for _ in range(20):
 		replies = []
 		search_results = tweepy.Cursor(
-			tweepy_api.search_tweets,
+			client.search_tweets,
 			since_id = id,
 			q = 'to:{}'.format(screen_name),
 			tweet_mode = 'extended').items()
@@ -135,27 +140,27 @@ def get_reply_downstream(id):
 
 def create_favorite(id):
 	try:
-		tweepy_api.create_favorite(id)
+		client.create_favorite(id)
 		return True
 	except Exception:
 		return False
 
 def destroy_favorite(id):
 	try:
-		tweepy_api.destroy_favorite(id)
+		client.destroy_favorite(id)
 		return True
 	except Exception:
 		return False
 
 def retweet(id):
 	try:
-		tweepy_api.retweet(id)
+		client.retweet(id)
 		return True
 	except Exception:
 		return False
 
 def get_image_url(id, index=None):
-	s = tweepy_api.get_status(id, tweet_mode='extended')
+	s = client.get_status(id, tweet_mode='extended')
 	if hasattr(s, 'retweeted_status'):
 		s = s.retweeted_status
 	media = s.extended_entities['media']
@@ -165,3 +170,10 @@ def get_image_url(id, index=None):
 		if index < 0 or index >= len(media):
 			raise IndexError(index)
 		return media[index]['media_url']
+
+if __name__ == '__main__':
+	try:
+		responce = client.create_tweet(text="test tweet")
+		print("succeed")
+	except Exception as e:
+		pprint(e)
