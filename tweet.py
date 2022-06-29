@@ -13,50 +13,50 @@ client = tweepy.Client(
 	access_token = ACCESS_TOKEN,
 	access_token_secret = ACCESS_TOKEN_SECRET)
 
-def reformat_status(raw):
+def reformat_status(raw, users = []):
 	formatted = {}
-	formatted['id'] = raw.id_str
+	formatted['id'] = raw.id
 	formatted['created_at'] = get_datetime_str(raw.created_at)
-	formatted['name'] = raw.user.name
-	formatted['screen_name'] = raw.user.screen_name
+	formatted['name'] = users[raw.author_id].username
+	formatted['screen_name'] = users[raw.author_id].name
 
 	if hasattr(raw, 'retweeted_status'): # is retweet
 		raw = raw.retweeted_status
 		formatted['is_rt'] = True
 		formatted['rt_created_at'] = get_datetime_str(raw.created_at)
-		formatted['rt_name'] = raw.user.name
-		formatted['rt_screen_name'] = raw.user.screen_name
+		formatted['rt_name'] = users[raw.author_id].username
+		formatted['rt_screen_name'] = users[raw.author_id].name
 	else:
 		formatted['is_rt'] = False
 
 	if hasattr(raw, 'urls'):
 		formatted['text'] = replace_shorten_urls(raw.full_text, raw.urls)
 	else:
-		formatted['text'] = raw.full_text
-	formatted['can_fav'] = not raw.favorited
-	formatted['can_rt'] = not raw.user.protected
-	formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
-	formatted['has_img'] = 'media' in raw.entities
-	formatted['has_no_reply'] = False # enalble get_reply button
+		formatted['text'] = raw.text
+	# formatted['can_fav'] = not raw.favorited
+	# formatted['can_rt'] = not raw.user.protected
+	# formatted['in_reply_to'] = raw.in_reply_to_status_id_str # id_str or None
+	# formatted['has_img'] = 'media' in raw.entities
+	# formatted['has_no_reply'] = False # enalble get_reply button
 
-	if raw.is_quote_status: # is quote
-		quote = raw.quoted_status
-		formatted['has_qt'] = True
-		formatted['qt_id'] = quote.id_str
-		formatted['qt_created_at'] = get_datetime_str(quote.created_at)
-		formatted['qt_name'] = quote.user.name
-		formatted['qt_screen_name'] = quote.user.screen_name
-		if hasattr(quote, 'urls'):
-			formatted['qt_text'] = replace_shorten_urls(quote.full_text, quote.urls)
-		else:
-			formatted['qt_text'] = quote.full_text
-		formatted['qt_can_fav'] = not quote.favorited
-		formatted['qt_can_rt'] = not quote.user.protected
-		formatted['qt_in_reply_to'] = quote.in_reply_to_status_id_str # id_str or None
-		formatted['qt_has_img'] = 'media' in quote.entities
-		formatted['qt_has_no_reply'] = False # enalble get_reply button
-	else:
-		formatted['has_qt'] = False
+	# if raw.is_quote_status: # is quote
+	# 	quote = raw.quoted_status
+	# 	formatted['has_qt'] = True
+	# 	formatted['qt_id'] = quote.id_str
+	# 	formatted['qt_created_at'] = get_datetime_str(quote.created_at)
+	# 	formatted['qt_name'] = quote.user.name
+	# 	formatted['qt_screen_name'] = quote.user.screen_name
+	# 	if hasattr(quote, 'urls'):
+	# 		formatted['qt_text'] = replace_shorten_urls(quote.full_text, quote.urls)
+	# 	else:
+	# 		formatted['qt_text'] = quote.full_text
+	# 	formatted['qt_can_fav'] = not quote.favorited
+	# 	formatted['qt_can_rt'] = not quote.user.protected
+	# 	formatted['qt_in_reply_to'] = quote.in_reply_to_status_id_str # id_str or None
+	# 	formatted['qt_has_img'] = 'media' in quote.entities
+	# 	formatted['qt_has_no_reply'] = False # enalble get_reply button
+	# else:
+	# 	formatted['has_qt'] = False
 
 	return formatted
 
@@ -72,11 +72,19 @@ def update_status(body=None):
 	return True
 
 def get_timeline():
-	raw_statuses = client.get_home_timeline(max_results=100)
-	pprint(raw_statuses)
-	statuses = [{} for _ in range(len(raw_statuses))]
-	for i, s in enumerate(raw_statuses):
-		statuses[i] = reformat_status(s)
+	response = client.get_home_timeline(
+		tweet_fields = ["attachments", "created_at", "entities", "id", "referenced_tweets", "text"],
+		expansions = ["author_id", "attachments.media_keys", "entities.mentions.username", "referenced_tweets.id"],
+		user_fields = ["name", "username"]
+	)
+
+	pprint(response)
+	pprint(response.includes["users"])
+	tweets = response.data
+	users = { response.includes["users"][i]["id"] : response.includes["users"][i] for i in range(0, len(response.includes["users"]) ) }
+	statuses = [{} for _ in range(len(tweets))]
+	for i, s in enumerate(tweets):
+		statuses[i] = reformat_status(s, users)
 	return statuses
 
 def get_reply_upstream(id):
@@ -173,7 +181,7 @@ def get_image_url(id, index=None):
 
 if __name__ == '__main__':
 	try:
-		responce = client.create_tweet(text="test tweet")
+		response = client.create_tweet(text="test tweet")
 		print("succeed")
 	except Exception as e:
 		pprint(e)
